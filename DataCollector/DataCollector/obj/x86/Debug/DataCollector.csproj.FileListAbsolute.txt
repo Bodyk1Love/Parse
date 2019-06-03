@@ -1,0 +1,16 @@
+/home/bohdan/C#_Projects/DataCollector/DataCollector/bin/Debug/DataCollector.exe
+/home/bohdan/C#_Projects/DataCollector/DataCollector/bin/Debug/DataCollector.pdb
+/home/bohdan/C#_Projects/DataCollector/DataCollector/bin/Debug/HtmlAgilityPack.dll
+/home/bohdan/C#_Projects/DataCollector/DataCollector/bin/Debug/System.Net.Http.Extensions.dll
+/home/bohdan/C#_Projects/DataCollector/DataCollector/bin/Debug/System.Net.Http.Primitives.dll
+/home/bohdan/C#_Projects/DataCollector/DataCollector/bin/Debug/System.Net.Http.Primitives.xml
+/home/bohdan/C#_Projects/DataCollector/DataCollector/bin/Debug/HtmlAgilityPack.pdb
+/home/bohdan/C#_Projects/DataCollector/DataCollector/obj/x86/Debug/DataCollector.csprojAssemblyReference.cache
+/home/bohdan/C#_Projects/DataCollector/DataCollector/obj/x86/Debug/DataCollector.csproj.CoreCompileInputs.cache
+/home/bohdan/C#_Projects/DataCollector/DataCollector/obj/x86/Debug/DataCollector.csproj.CopyComplete
+/home/bohdan/C#_Projects/DataCollector/DataCollector/obj/x86/Debug/DataCollector.exe
+/home/bohdan/C#_Projects/DataCollector/DataCollector/obj/x86/Debug/DataCollector.pdb
+/home/bohdan/C#_Projects/DataCollector/DataCollector/bin/Debug/CsvHelper.dll
+/home/bohdan/C#_Projects/DataCollector/DataCollector/bin/Debug/System.ValueTuple.dll
+/home/bohdan/C#_Projects/DataCollector/DataCollector/bin/Debug/System.ValueTuple.xml
+/home/bohdan/C#_Projects/DataCollector/DataCollector/bin/Debug/CsvHelper.xml

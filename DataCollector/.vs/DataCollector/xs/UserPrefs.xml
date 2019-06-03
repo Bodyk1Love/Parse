@@ -1,0 +1,35 @@
+﻿<Properties StartupConfiguration="{E81D2CF5-39B6-4CAE-8D9B-5DC87C83B58F}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
+  <MonoDevelop.Ide.Workbench ActiveDocument="DataCollector/Program.cs">
+    <Files>
+      <File FileName="DataCollector/Program.cs" Line="1" Column="1" />
+      <File FileName="DataCollector/MainInfo.cs" Line="25" Column="10" />
+      <File FileName="DataCollector/SetlistInfo.cs" Line="3" Column="1" />
+      <File FileName="DataCollector/ArtistInfo.cs" Line="8" Column="56" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="DataCollector" expanded="True">
+            <Node name="DataCollector" expanded="True">
+              <Node name="Program.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State name="__root__">
+          <Node name="DataCollector" expanded="True" selected="True">
+            <Node name="DataCollector" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.DataCollector PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

@@ -1,0 +1,12 @@
+/home/bohdan/C#_Projects/Setlist/Setlist/obj/x86/Debug/Setlist.csprojAssemblyReference.cache
+/home/bohdan/C#_Projects/Setlist/Setlist/obj/x86/Debug/Setlist.csproj.CoreCompileInputs.cache
+/home/bohdan/C#_Projects/Setlist/Setlist/bin/Debug/Setlist.exe
+/home/bohdan/C#_Projects/Setlist/Setlist/bin/Debug/Setlist.pdb
+/home/bohdan/C#_Projects/Setlist/Setlist/bin/Debug/HtmlAgilityPack.dll
+/home/bohdan/C#_Projects/Setlist/Setlist/bin/Debug/System.Net.Http.Extensions.dll
+/home/bohdan/C#_Projects/Setlist/Setlist/bin/Debug/System.Net.Http.Primitives.dll
+/home/bohdan/C#_Projects/Setlist/Setlist/bin/Debug/HtmlAgilityPack.pdb
+/home/bohdan/C#_Projects/Setlist/Setlist/bin/Debug/System.Net.Http.Primitives.xml
+/home/bohdan/C#_Projects/Setlist/Setlist/obj/x86/Debug/Setlist.csproj.CopyComplete
+/home/bohdan/C#_Projects/Setlist/Setlist/obj/x86/Debug/Setlist.exe
+/home/bohdan/C#_Projects/Setlist/Setlist/obj/x86/Debug/Setlist.pdb
