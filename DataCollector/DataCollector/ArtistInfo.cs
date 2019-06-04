@@ -1,9 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 namespace DataCollector
 {
     public class ArtistInfo
     {
+        /* Class describes artist page object.
+         * It keeps info about artist/band name,
+         * list of all it's songs, list with it's
+         * albums a a dictionary with a 
+         * tourName(string) : tourSongs(List<string>)        
+         * pair.
+         * 
+         * ParseArtistPage() function get all data from
+         * artist page and make an object of this class.
+         */
+
+
         public string bandName;
         public List<string> songs = new List<string>();
         public Dictionary<string, List<string>> tours = new Dictionary<string, List<string>>();
@@ -16,21 +27,6 @@ namespace DataCollector
             this.songs = songs;
             this.tours = tours;
             this.albums = albums;
-        }
-
-        public void printInfo()
-        {
-            Console.WriteLine($"Band: {bandName}");
-            Console.WriteLine("----------------------------------");
-            songs.ForEach(Console.WriteLine);
-            Console.WriteLine("----------------------------------");
-            foreach (KeyValuePair<string, List<string>> kvp in tours)
-            {
-                Console.Write("Key = {0}, Value ", kvp.Key);
-                kvp.Value.ForEach(Console.WriteLine);
-            }
-            Console.WriteLine("----------------------------------");
-            albums.ForEach(Console.WriteLine);
         }
     }
 }

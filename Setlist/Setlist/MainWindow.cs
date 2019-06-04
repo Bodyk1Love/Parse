@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using Gtk;
 using System.Linq;
-using System.Net.Http;
 using HtmlAgilityPack;
-using System.Reflection;
-using System.IO;
 using System.Text;
 using Setlist;
 
@@ -23,27 +20,17 @@ public partial class MainWindow : Gtk.Window
         a.RetVal = true;
     }
 
-    protected void OnButton1Clicked(object sender, EventArgs e)
+
+
+    public static List<MainInfo> ParseMainPage()
     {
-        Globals.MainPageInfo = ParseMainPage();
-        for(var i=0; i<10; i++)
-        {
-            combobox1.AppendText(String.Join("\n", Globals.MainPageInfo[i].GetFields()));
-        }
-        for (var i = 10; i < 20; i++)
-        {
-            combobox2.AppendText(String.Join("\n", Globals.MainPageInfo[i].GetFields()));
-        }
-        for (var i = 20; i < 30; i++)
-        {
-            combobox3.AppendText(String.Join("\n", Globals.MainPageInfo[i].GetFields()));
-        }
-
-    }
-
-
-    static List<MainInfo> ParseMainPage()
-    {
+        /* Get main data from the main page
+         * https://www.setlist.fm/
+         * 
+         * 
+         * Output: list of MainInfo objects
+         * (see info in MainInfo.cs)
+         */
         HtmlWeb webDoc = new HtmlWeb();
         HtmlDocument doc = webDoc.Load("https://www.setlist.fm/");
         HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//a");
@@ -51,7 +38,7 @@ public partial class MainWindow : Gtk.Window
         foreach (var tag in nodes)
         {
             if (tag.Attributes.Contains("title") &&
-                tag.Attributes["title"].Value.StartsWith("View this"))
+                tag.Attributes["title"].Value.StartsWith("View this", StringComparison.Ordinal))
 
             {
                 string observeLink = tag.Attributes["href"].Value;
@@ -60,7 +47,7 @@ public partial class MainWindow : Gtk.Window
                                 StringSplitOptions.None
                 );
                 txt = txt.Where(c => c != "").ToArray();
-                MainInfo obj = new MainInfo(clean(txt[0]), txt[1], txt[2], txt[3], txt[4], observeLink);
+                MainInfo obj = new MainInfo(clean(txt[0]), clean(txt[1]), txt[2], txt[3], txt[4], observeLink);
                 MainPage.Add(obj);
             }
         }
@@ -68,7 +55,9 @@ public partial class MainWindow : Gtk.Window
     }
 
 
-    static string clean(string s)
+
+
+    public static string clean(string s)
     {
         StringBuilder sb = new StringBuilder(s);
         sb.Replace("&#039;", "\'");
@@ -79,7 +68,7 @@ public partial class MainWindow : Gtk.Window
         return sb.ToString();
     }
 
-    static SetlistInfo ParseSetlistPage(MainInfo parent)
+    public static SetlistInfo ParseSetlistPage(MainInfo parent)
     {
         // Get all name of songs in the page
         List<string> songs = new List<string>();
@@ -112,9 +101,17 @@ public partial class MainWindow : Gtk.Window
         return obj;
     }
 
-    static SetlistInfo ParseSetlistPage(string link, string bandName)
+    public static SetlistInfo ParseSetlistPage(string link, string bandName)
     {
-        // Get all name of songs in the page
+        /* Get main info from setlist page
+         * of one artist.
+         * 
+         * Input: link on setlist and name of 
+         * setlist artist.
+         * 
+         * Output: SetlistInfo object
+         * (see info in SetlistInfo.cs)          
+         */
         List<string> songs = new List<string>();
         string artistLink = "";
         HtmlWeb webDoc = new HtmlWeb();
@@ -127,7 +124,7 @@ public partial class MainWindow : Gtk.Window
             if ((tag.Attributes.Contains("class") &&
                 tag.Attributes["class"].Value == "summary url") ||
                 (tag.Attributes.Contains("title") &&
-                tag.Attributes["title"].Value.StartsWith("Statistics for")) &&
+                tag.Attributes["title"].Value.StartsWith("Statistics for", StringComparison.Ordinal)) &&
                 !songs.Contains(tag.InnerText))
             {
                 var name = clean(tag.InnerText.Trim());
@@ -147,10 +144,19 @@ public partial class MainWindow : Gtk.Window
         return obj;
     }
 
-    static ArtistInfo ParseArtistPage(SetlistInfo parent)
+
+    public static ArtistInfo ParseArtistPage(SetlistInfo parent)
     {
+        /* Get main info from artist page.
+        *
+        * 
+        * Input: SetlistInfo object of one artist.
+        * 
+        * Output: ArtistInfo object
+        * (see info in ArtistInfo.cs)          
+        */
         List<string> songs = new List<string>();
-        Globals.tours = new Dictionary<List<string>, string>();
+        Dictionary<string, List<string>> tours = new Dictionary<string, List<string>>();
         List<string> albums = new List<string>();
         string albumsLink = "";
 
@@ -168,28 +174,32 @@ public partial class MainWindow : Gtk.Window
             }
 
             if (tag.Attributes.Contains("title") &&
-              tag.Attributes["title"].Value.StartsWith("Show song statistics of the tour"))
+              tag.Attributes["title"].Value.StartsWith("Show song statistics of the tour", StringComparison.Ordinal))
             {
                 var name = clean(tag.InnerText.Trim());
-                Globals.tours.Add(ParseTourPage(tag.Attributes["href"].Value), name);
+                tours.Add(name, ParseTourPage(tag.Attributes["href"].Value));
             }
             if (tag.Attributes.Contains("title") &&
-              tag.Attributes["title"].Value.EndsWith("albums"))
+              tag.Attributes["title"].Value.EndsWith("albums", StringComparison.Ordinal))
             {
                 albumsLink = tag.Attributes["href"].Value.Replace("../", "");
             }
         }
-
         albums = ParseAlbumPage(albumsLink);
 
-        ArtistInfo artist = new ArtistInfo(parent.bandName, songs, Globals.tours, albums);
+        ArtistInfo artist = new ArtistInfo(parent.bandName, songs, tours, albums);
         return artist;
     }
 
 
-    static List<string> ParseAlbumPage(string link)
+    public static List<string> ParseAlbumPage(string link)
     {
-        // Get all name of songs in the page
+        /* Get list of albums of an artist.
+         *
+         * Input: string link on artist's album.
+         * 
+         * Output: string list with artist albums.        
+         */
         List<string> albums = new List<string>();
         HtmlWeb webDoc = new HtmlWeb();
         HtmlDocument doc = webDoc.Load("https://www.setlist.fm/" + link);
@@ -217,10 +227,16 @@ public partial class MainWindow : Gtk.Window
     }
 
 
-
-    static List<string> ParseTourPage(string link)
+    public static List<string> ParseTourPage(string link)
     {
-        // Get all name of songs in the page
+        /* Get list of songs from a particular
+         * tour.
+         *
+         * Input: string link on a tour.
+         * 
+         * Output: string list with songs from
+         * the tour.        
+         */
         List<string> songs = new List<string>();
         HtmlWeb webDoc = new HtmlWeb();
         HtmlDocument doc = webDoc.Load("https://www.setlist.fm/" + link);
@@ -237,21 +253,33 @@ public partial class MainWindow : Gtk.Window
         return songs;
     }
 
-    static List<string> GetLinkOnArtist()
+    public static List<string> GetLinksOnArtists()
     {
-        // Get all links on artists [A-Z]
+        /* Get all links on artists [A-Z] from page
+         * https://www.setlist.fm/artists.
+         * 
+         * 
+         * 
+         * Output: string list with links
+         * for each artist. (27 links)
+         */
 
         List<string> links = new List<string>();
         HtmlWeb webDoc = new HtmlWeb();
         HtmlDocument doc = webDoc.Load("https://www.setlist.fm/artists");
         HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//a");
 
+        if (nodes.Count == 0)
+        {
+            links.Add("Problem occured while loading all artists!");
+            return links;
+        }
+
         foreach (var tag in nodes)
         {
-            //Console.WriteLine(tag.Attributes[0].Value);
             if (tag.Attributes["href"] != null &&
                 tag.Attributes["href"].Value.Contains("artist") &&
-                tag.Attributes["href"].Value.EndsWith("1.html"))
+                tag.Attributes["href"].Value.EndsWith("1.html", StringComparison.Ordinal))
             {
                 if (!links.Contains(tag.Attributes["href"].Value))
                 {
@@ -265,17 +293,33 @@ public partial class MainWindow : Gtk.Window
 
 
 
-    static string[] GenerateAllLinks(string link)
+
+    public static string[] GenerateAllLinks(string link)
     {
-        // Get all links on one artist name
+        /* Get all links on all pages for
+         * first artist letter.
+         * 
+         * Input: link on first page with
+         * all artists. (From list that generate
+         * GetLinksOnArtists() function  
+         * for exsample: https://www.setlist.fm/artist/browse/a/1.html
+         * 
+         * Output: string array with all links
+         * with artists on first letter.
+         */
+
 
         int last = 0;
         HtmlWeb webDoc = new HtmlWeb();
         HtmlDocument doc = webDoc.Load("https://www.setlist.fm/" + link);
         HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//a");
 
+        if (nodes.Count == 0)
+        {
+            return "Problem occured while loading artist link! |".Split('|');
+        }
+
         string category = link.Split('/')[2];
-        Console.WriteLine(category);
 
         foreach (var tag in nodes)
         {
@@ -295,9 +339,20 @@ public partial class MainWindow : Gtk.Window
         return AllLinks;
     }
 
-    static Dictionary<string, string> GetArtistLink(string linkToGo)
+
+
+    public static Dictionary<string, string> GetArtistLink(string linkToGo)
     {
-        // Get all links on one artist name
+        /* Get a dictionary with a link on
+         * one artist from page with all artists.
+         * 
+         * Input: a link on a page with artists
+         * (From array that is generated by
+         * GenerateAllLinks() function)
+         * 
+         * Output: a dictionary with
+         * link : artist_name pair.
+         */
 
         Dictionary<string, string> ArtistLink = new Dictionary<string, string>();
         HtmlWeb webDoc = new HtmlWeb();
@@ -307,7 +362,7 @@ public partial class MainWindow : Gtk.Window
         foreach (var tag in nodes)
         {
             if (tag.Attributes.Contains("title") &&
-                tag.Attributes["title"].Value.StartsWith("More"))
+                tag.Attributes["title"].Value.StartsWith("More", StringComparison.Ordinal))
             {
                 var link = tag.Attributes["href"].Value.Replace("../", "");
                 var name = clean(String.Format("\"{0}\"", tag.InnerHtml.Substring(6, tag.InnerHtml.Length - 13)));
@@ -317,9 +372,15 @@ public partial class MainWindow : Gtk.Window
         return ArtistLink;
     }
 
-
-    static List<TopSetlistInfo> ParseTopSetlistsPage()
+    public static List<TopSetlistInfo> ParseTopSetlistsPage()
     {
+        /* Get top setlists from setlit page 
+         * https://www.setlist.fm/setlists
+         * 
+         * 
+         * Output: list of TopSetlistInfo objects
+         * (see info in TopSetlistInfo.cs)
+         */
         HtmlWeb webDoc = new HtmlWeb();
         HtmlDocument doc = webDoc.Load("https://www.setlist.fm/setlists");
         HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//a");
@@ -336,11 +397,50 @@ public partial class MainWindow : Gtk.Window
                                 StringSplitOptions.None
                 );
                 txt = txt.Where(c => c != "").ToArray();
-                TopSetlistInfo obj = new TopSetlistInfo(clean(txt[0]), txt[1], observeLink);
+                TopSetlistInfo obj = new TopSetlistInfo(clean(txt[0]), clean(txt[1]), observeLink);
                 TopSetlists.Add(obj);
             }
         }
         return TopSetlists;
+    }
+
+
+
+
+
+    protected void OnButton1Clicked(object sender, EventArgs e)
+    {
+        Globals.MainPageInfo = ParseMainPage();
+        for (var i = 0; i < 10; i++)
+        {
+            combobox1.AppendText(String.Join("\n", Globals.MainPageInfo[i].GetFields()));
+        }
+        for (var i = 10; i < 20; i++)
+        {
+            combobox2.AppendText(String.Join("\n", Globals.MainPageInfo[i].GetFields()));
+        }
+        for (var i = 20; i < 30; i++)
+        {
+            combobox3.AppendText(String.Join("\n", Globals.MainPageInfo[i].GetFields()));
+        }
+
+    }
+
+
+    protected void OnButton2Clicked(object sender, EventArgs e)
+    {
+        Globals.artists = GetLinksOnArtists();
+    }
+
+
+
+    protected void OnButton3Clicked(object sender, EventArgs e)
+    {
+        Globals.TopSetlists = ParseTopSetlistsPage();
+        for (var i = 0; i < 10; i++)
+        {
+            combobox10.AppendText(String.Join("\n", Globals.TopSetlists[i].GetFields()));
+        }
     }
 
 
@@ -358,7 +458,7 @@ public partial class MainWindow : Gtk.Window
         {
             combobox6.AppendText(song);
         }
-        foreach (var tour in artist.tours.Values)
+        foreach (var tour in artist.tours.Keys)
         {
             combobox7.AppendText(tour);
         }
@@ -383,7 +483,7 @@ public partial class MainWindow : Gtk.Window
         {
             combobox6.AppendText(song);
         }
-        foreach (var tour in artist.tours.Values)
+        foreach (var tour in artist.tours.Keys)
         {
             combobox7.AppendText(tour);
         }
@@ -408,7 +508,7 @@ public partial class MainWindow : Gtk.Window
         {
             combobox6.AppendText(song);
         }
-        foreach (var tour in artist.tours.Values)
+        foreach (var tour in artist.tours.Keys)
         {
             combobox7.AppendText(tour);
         }
@@ -422,15 +522,33 @@ public partial class MainWindow : Gtk.Window
         }
     }
 
-    public void clear()
+    protected void OnCombobox4Changed(object sender, EventArgs e)
     {
-        for (int i=0; i<200; i++)
+        var id = combobox4.Active;
+        try
         {
-            combobox5.RemoveText(0);
-            combobox6.RemoveText(0);
-            combobox7.RemoveText(0);
-            combobox8.RemoveText(0);
+            string[] AllArtistsOnLetter = GenerateAllLinks(Globals.artists[id]);
+
+            Dictionary<string, string> Artists = new Dictionary<string, string>();
+            for (int i = 0; i < 5; i++)
+            {
+                var page = GetArtistLink(AllArtistsOnLetter[i]);
+                foreach (KeyValuePair<string, string> keyValue in page)
+                {
+                    Artists.Add(keyValue.Key, keyValue.Value);
+                }
+            }
+            foreach (var name in Artists.Values)
+            {
+                combobox9.AppendText(name);
+            }
+            Globals.Artists = Artists;
         }
+        catch (Exception)
+        {
+            combobox9.AppendText("Load Artists first");
+        }
+
     }
 
     protected void OnCombobox7Changed(object sender, EventArgs e)
@@ -454,31 +572,9 @@ public partial class MainWindow : Gtk.Window
         }
     }
 
-    protected void OnButton2Clicked(object sender, EventArgs e)
-    {
-        Globals.artists = GetLinkOnArtist();
-    }
+  
 
-    protected void OnCombobox4Changed(object sender, EventArgs e)
-    {
-        var id = combobox4.Active;
-        string[] AllArtistsOnLetter = GenerateAllLinks(Globals.artists[id]);
-        Dictionary<string, string> Artists = new Dictionary<string, string>();
-        for (int i = 0; i < 5; i++)
-        {
-            var page = GetArtistLink(AllArtistsOnLetter[i]);
-            foreach (KeyValuePair<string, string> keyValue in page)
-            {
-                Artists.Add(keyValue.Key, keyValue.Value);
-            } 
-        }
-        foreach (var name in Artists.Values)
-        {
-            combobox9.AppendText(name);
-        }
-        Globals.Artists = Artists;
-
-    }
+  
 
     protected void OnCombobox9Changed(object sender, EventArgs e)
     {
@@ -491,7 +587,7 @@ public partial class MainWindow : Gtk.Window
         {
             combobox6.AppendText(song);
         }
-        foreach (var tour in artist.tours.Values)
+        foreach (var tour in artist.tours.Keys)
         {
             combobox7.AppendText(tour);
         }
@@ -505,14 +601,7 @@ public partial class MainWindow : Gtk.Window
         }
     }
 
-    protected void OnButton3Clicked(object sender, EventArgs e)
-    {
-        Globals.TopSetlists = ParseTopSetlistsPage();
-        for (var i = 0; i < 10; i++)
-        {
-            combobox10.AppendText(String.Join("\n", Globals.TopSetlists[i].GetFields()));
-        }
-    }
+  
 
     protected void OnCombobox10Changed(object sender, EventArgs e)
     {
@@ -525,7 +614,7 @@ public partial class MainWindow : Gtk.Window
         {
             combobox6.AppendText(song);
         }
-        foreach (var tour in artist.tours.Values)
+        foreach (var tour in artist.tours.Keys)
         {
             combobox7.AppendText(tour);
         }
@@ -536,6 +625,17 @@ public partial class MainWindow : Gtk.Window
         foreach (var song in check.songs)
         {
             combobox5.AppendText(song);
+        }
+    }
+
+    public void clear()
+    {
+        for (int i = 0; i < 200; i++)
+        {
+            combobox5.RemoveText(0);
+            combobox6.RemoveText(0);
+            combobox7.RemoveText(0);
+            combobox8.RemoveText(0);
         }
     }
 }

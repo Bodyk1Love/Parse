@@ -5,33 +5,30 @@ namespace Setlist
 {
     public class ArtistInfo
     {
+        /* Class describes artist page object.
+         * It keeps info about artist/band name,
+         * list of all it's songs, list with it's
+         * albums a a dictionary with a 
+         * tourName(string) : tourSongs(List<string>)        
+         * pair.
+         * 
+         * ParseArtistPage() function get all data from
+         * artist page and make an object of this class.
+         */
+
+
         public string bandName;
         public List<string> songs = new List<string>();
-        public Dictionary<List<string>, string> tours = new Dictionary<List<string>, string>();
+        public Dictionary<string, List<string>> tours = new Dictionary<string, List<string>>();
         public List<string> albums = new List<string>();
 
         public ArtistInfo(string bandName, List<string> songs,
-               Dictionary<List<string>, string> tours, List<string> albums)
+               Dictionary<string, List<string>> tours, List<string> albums)
         {
             this.bandName = bandName;
             this.songs = songs;
             this.tours = tours;
             this.albums = albums;
         }
-
-        //public void printInfo()
-        //{
-        //    Console.WriteLine($"Band: {bandName}");
-        //    Console.WriteLine("----------------------------------");
-        //    songs.ForEach(Console.WriteLine);
-        //    Console.WriteLine("----------------------------------");
-        //    foreach (KeyValuePair < List<string>, string > kvp in tours)
-        //    {
-        //        Console.Write("Key = {0}, Value ", kvp.Key);
-        //        kvp.Key.ForEach(Console.WriteLine);
-        //    }
-        //    Console.WriteLine("----------------------------------");
-        //    albums.ForEach(Console.WriteLine);
-        //}
     }
 }

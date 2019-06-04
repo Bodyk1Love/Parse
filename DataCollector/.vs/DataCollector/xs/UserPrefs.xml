@@ -1,11 +1,11 @@
 ﻿<Properties StartupConfiguration="{E81D2CF5-39B6-4CAE-8D9B-5DC87C83B58F}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
   <MonoDevelop.Ide.Workbench ActiveDocument="DataCollector/Program.cs">
     <Files>
-      <File FileName="DataCollector/Program.cs" Line="300" Column="43" />
-      <File FileName="DataCollector/MainInfo.cs" Line="10" Column="25" />
-      <File FileName="DataCollector/SetlistInfo.cs" Line="16" Column="22" />
-      <File FileName="DataCollector/ArtistInfo.cs" Line="8" Column="56" />
-      <File FileName="DataCollector/TopSetlistInfo.cs" Line="14" Column="30" />
+      <File FileName="DataCollector/Program.cs" Line="484" Column="79" />
+      <File FileName="DataCollector/MainInfo.cs" Line="3" Column="5" />
+      <File FileName="DataCollector/SetlistInfo.cs" Line="8" Column="9" />
+      <File FileName="DataCollector/ArtistInfo.cs" Line="30" Column="10" />
+      <File FileName="DataCollector/TopSetlistInfo.cs" Line="24" Column="30" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">

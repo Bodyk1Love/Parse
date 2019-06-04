@@ -90,55 +90,50 @@ namespace DataCollector
             //}
             //ArtistInfo artist = ParseArtistPage(check);
             //artist.printInfo();
-            List<TopSetlistInfo> Top = ParseTopSetlistsPage();
-            foreach(var i in Top)
-            {
-                i.printInfo();
-            }
+            //List<TopSetlistInfo> Top = ParseTopSetlistsPage();
+            //foreach(var i in Top)
+            //{
+            //    i.printInfo();
+            //}
+
+
+            MainPageToFile("MainPage.txt");
+            OneSetlistInfo("SetlistInfo.txt");
+            TopSetlist("TopSetlists.txt");
         }
 
 
 
 
-        static List<string> GetSongs(string link)
+
+
+        public static List<string> GetLinksOnArtists()
         {
-            // Get all name of songs in the page
-            List<string> songs = new List<string>();
-            HtmlWeb webDoc = new HtmlWeb();
-            HtmlDocument doc = webDoc.Load("https://www.setlist.fm/" + link);
-            HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//a");
-
-            foreach (var tag in nodes)
-            {
-
-                if (tag.Attributes.Contains("class") && 
-                    (tag.Attributes["class"].Value == "songLabel" ||
-                    tag.Attributes["class"].Value == "songName") &&
-                    !songs.Contains(tag.InnerText))
-                {
-                    var name = clean(String.Format("\"{0}\"", tag.InnerText.Trim()));
-                    songs.Add(name);
-                }
-            }
-            return songs;
-        }
-
-
-        static List<string> GetLinkOnArtist()
-        {
-            // Get all links on artists [A-Z]
+            /* Get all links on artists [A-Z] from page
+             * https://www.setlist.fm/artists.
+             * 
+             * 
+             * 
+             * Output: string list with links
+             * for each artist. (27 links)
+             */
 
             List<string> links = new List<string>();
             HtmlWeb webDoc = new HtmlWeb();
             HtmlDocument doc = webDoc.Load("https://www.setlist.fm/artists");
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//a");
 
+            if (nodes.Count == 0)
+            {
+                links.Add("Problem occured while loading all artists!");
+                return links;
+            }
+
             foreach (var tag in nodes)
             {
-                //Console.WriteLine(tag.Attributes[0].Value);
-                if (tag.Attributes["href"] != null && 
+                if (tag.Attributes["href"] != null &&
                     tag.Attributes["href"].Value.Contains("artist") &&
-                    tag.Attributes["href"].Value.EndsWith("1.html"))
+                    tag.Attributes["href"].Value.EndsWith("1.html", StringComparison.Ordinal))
                 {
                     if (!links.Contains(tag.Attributes["href"].Value))
                     {
@@ -150,83 +145,35 @@ namespace DataCollector
             return links;
         }
 
-        static Dictionary<string, string> GetArtistLink(string linkToGo)
+
+
+
+        public static string[] GenerateAllLinks(string link)
         {
-            // Get all links on one artist name
+            /* Get all links on all pages for
+             * first artist letter.
+             * 
+             * Input: link on first page with
+             * all artists. (From list that generate
+             * GetLinksOnArtists() function  
+             * for exsample: https://www.setlist.fm/artist/browse/a/1.html
+             * 
+             * Output: string array with all links
+             * with artists on first letter.
+             */
 
-            Dictionary<string, string> ArtistLink = new Dictionary<string, string>();
-            HtmlWeb webDoc = new HtmlWeb();
-            HtmlDocument doc = webDoc.Load("https://www.setlist.fm/" + linkToGo);
-            HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//a");
-
-            foreach (var tag in nodes)
-            {
-                if (tag.Attributes.Contains("title") &&
-                    tag.Attributes["title"].Value.StartsWith("More"))
-                {
-                    var link = tag.Attributes["href"].Value.Replace("../", "");
-                    var name = clean(String.Format("\"{0}\"", tag.InnerHtml.Substring(6, tag.InnerHtml.Length - 13)));
-                    ArtistLink.Add(link, name);
-                }
-            }
-            return ArtistLink;
-        }
-
-
-        static void GetTourLinks()
-        {
-            // Get all links on one artist name
-            HtmlWeb webDoc = new HtmlWeb();
-            HtmlDocument doc = webDoc.Load("https://www.setlist.fm/setlists/g-13d4ade5.html");
-            HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//a");
-
-            foreach (var tag in nodes)
-            {
-                if (tag.Attributes.Contains("class") &&
-                    tag.Attributes["class"].Value == "summary url")
-                {
-                    Console.WriteLine(tag.Attributes["href"].Value);
-                }
-            }
-        }
-
-
-
-
-
-
-        static string GetArtistStatistics(string link)
-        {
-            // Get all links on one artist name
-            string statLink = null;
-            HtmlWeb webDoc = new HtmlWeb();
-            HtmlDocument doc = webDoc.Load("https://www.setlist.fm/" + link);
-            HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//a");
-
-            foreach (var tag in nodes)
-            {
-                if (tag.Attributes.Contains("title") &&
-                    tag.Attributes["title"].Value == "View song statistics of all setlists")
-
-                {
-                    statLink = tag.Attributes["href"].Value.Replace("../", "");
-                }
-            }
-            return statLink;
-        }
-
-
-        static string[] GenerateAllLinks(string link)
-        {
-            // Get all links on one artist name
 
             int last = 0;
             HtmlWeb webDoc = new HtmlWeb();
             HtmlDocument doc = webDoc.Load("https://www.setlist.fm/" + link);
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//a");
 
+            if (nodes.Count == 0)
+            {
+                return "Problem occured while loading artist link! |".Split('|');
+            }
+
             string category = link.Split('/')[2];
-            Console.WriteLine(category);
 
             foreach (var tag in nodes)
             {
@@ -239,17 +186,55 @@ namespace DataCollector
                 }
             }
             string[] AllLinks = new string[last];
-            for (int i=0; i<last; i++)
+            for (int i = 0; i < last; i++)
             {
-                AllLinks[i] = "artist/browse/" + category + '/' + (i+1).ToString() + ".html";
+                AllLinks[i] = "artist/browse/" + category + '/' + (i + 1).ToString() + ".html";
             }
             return AllLinks;
         }
 
 
 
-        static string clean(string s)
+        public static Dictionary<string, string> GetArtistLink(string linkToGo)
         {
+            /* Get a dictionary with a link on
+             * one artist from page with all artists.
+             * 
+             * Input: a link on a page with artists
+             * (From array that is generated by
+             * GenerateAllLinks() function)
+             * 
+             * Output: a dictionary with
+             * link : artist_name pair.
+             */
+
+            Dictionary<string, string> ArtistLink = new Dictionary<string, string>();
+            HtmlWeb webDoc = new HtmlWeb();
+            HtmlDocument doc = webDoc.Load("https://www.setlist.fm/" + linkToGo);
+            HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//a");
+
+            foreach (var tag in nodes)
+            {
+                if (tag.Attributes.Contains("title") &&
+                    tag.Attributes["title"].Value.StartsWith("More", StringComparison.Ordinal))
+                {
+                    var link = tag.Attributes["href"].Value.Replace("../", "");
+                    var name = clean(String.Format("\"{0}\"", tag.InnerHtml.Substring(6, tag.InnerHtml.Length - 13)));
+                    ArtistLink.Add(link, name);
+                }
+            }
+            return ArtistLink;
+        }
+
+
+        public static string clean(string s)
+        {
+            /*To correct special chars in data
+             * 
+             * Input: parsed string
+             * 
+             * Output: cleaned string         
+             */
             StringBuilder sb = new StringBuilder(s);
             sb.Replace("&#039;", "\'");
             sb.Replace("&#039", "\'");
@@ -260,16 +245,23 @@ namespace DataCollector
         }
 
         //-------------------------------------------------------------------
-        static List<MainInfo> ParseMainPage()
+        public static List<MainInfo> ParseMainPage()
         {
+            /* Get main data from the main page
+             * https://www.setlist.fm/
+             * 
+             * 
+             * Output: list of MainInfo objects
+             * (see info in MainInfo.cs)
+             */
             HtmlWeb webDoc = new HtmlWeb();
             HtmlDocument doc = webDoc.Load("https://www.setlist.fm/");
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//a");
             List<MainInfo> MainPage = new List<MainInfo>();
-            foreach(var tag in nodes)
+            foreach (var tag in nodes)
             {
                 if (tag.Attributes.Contains("title") &&
-                    tag.Attributes["title"].Value.StartsWith("View this"))
+                    tag.Attributes["title"].Value.StartsWith("View this", StringComparison.Ordinal))
 
                 {
                     string observeLink = tag.Attributes["href"].Value;
@@ -278,15 +270,23 @@ namespace DataCollector
                                     StringSplitOptions.None
                     );
                     txt = txt.Where(c => c != "").ToArray();
-                    MainInfo obj = new MainInfo(clean(txt[0]), txt[1], txt[2], txt[3], txt[4], observeLink);
+                    MainInfo obj = new MainInfo(clean(txt[0]), clean(txt[1]), txt[2], txt[3], txt[4], observeLink);
                     MainPage.Add(obj);
                 }
             }
             return MainPage;
         }
 
-        static List<TopSetlistInfo> ParseTopSetlistsPage()
+
+        public static List<TopSetlistInfo> ParseTopSetlistsPage()
         {
+            /* Get top setlists from setlit page 
+             * https://www.setlist.fm/setlists
+             * 
+             * 
+             * Output: list of TopSetlistInfo objects
+             * (see info in TopSetlistInfo.cs)
+             */
             HtmlWeb webDoc = new HtmlWeb();
             HtmlDocument doc = webDoc.Load("https://www.setlist.fm/setlists");
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//a");
@@ -303,27 +303,37 @@ namespace DataCollector
                                     StringSplitOptions.None
                     );
                     txt = txt.Where(c => c != "").ToArray();
-                    TopSetlistInfo obj = new TopSetlistInfo(clean(txt[0]), txt[1], observeLink);
+                    TopSetlistInfo obj = new TopSetlistInfo(clean(txt[0]), clean(txt[1]), observeLink);
                     TopSetlists.Add(obj);
                 }
             }
             return TopSetlists;
         }
 
-        static SetlistInfo ParseSetlistPage(MainInfo parent)
+        public static SetlistInfo ParseSetlistPage(string link, string bandName)
         {
-            // Get all name of songs in the page
+            /* Get main info from setlist page
+             * of one artist.
+             * 
+             * Input: link on setlist and name of 
+             * setlist artist.
+             * 
+             * Output: SetlistInfo object
+             * (see info in SetlistInfo.cs)          
+             */
             List<string> songs = new List<string>();
             string artistLink = "";
             HtmlWeb webDoc = new HtmlWeb();
-            HtmlDocument doc = webDoc.Load("https://www.setlist.fm/" + parent.link);
+            HtmlDocument doc = webDoc.Load("https://www.setlist.fm/" + link);
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//a");
 
             foreach (var tag in nodes)
             {
 
-                if (tag.Attributes.Contains("class") &&
-                    tag.Attributes["class"].Value == "songLabel" &&
+                if ((tag.Attributes.Contains("class") &&
+                    tag.Attributes["class"].Value == "summary url") ||
+                    (tag.Attributes.Contains("title") &&
+                    tag.Attributes["title"].Value.StartsWith("Statistics for", StringComparison.Ordinal)) &&
                     !songs.Contains(tag.InnerText))
                 {
                     var name = clean(tag.InnerText.Trim());
@@ -335,13 +345,25 @@ namespace DataCollector
                     artistLink = tag.Attributes["href"].Value.Replace("../", "");
                 }
             }
-            SetlistInfo obj = new SetlistInfo(parent.GetFields(), artistLink, songs);
+            if (songs.Count == 0)
+            {
+                songs.Add("Nothing");
+            }
+            SetlistInfo obj = new SetlistInfo(bandName, artistLink, songs);
             return obj;
         }
 
 
-        static ArtistInfo ParseArtistPage(SetlistInfo parent)
+        public static ArtistInfo ParseArtistPage(SetlistInfo parent)
         {
+            /* Get main info from artist page.
+            *
+            * 
+            * Input: SetlistInfo object of one artist.
+            * 
+            * Output: ArtistInfo object
+            * (see info in ArtistInfo.cs)          
+            */
             List<string> songs = new List<string>();
             Dictionary<string, List<string>> tours = new Dictionary<string, List<string>>();
             List<string> albums = new List<string>();
@@ -361,20 +383,17 @@ namespace DataCollector
                 }
 
                 if (tag.Attributes.Contains("title") &&
-                  tag.Attributes["title"].Value.StartsWith("Show song statistics of the tour"))
+                  tag.Attributes["title"].Value.StartsWith("Show song statistics of the tour", StringComparison.Ordinal))
                 {
                     var name = clean(tag.InnerText.Trim());
                     tours.Add(name, ParseTourPage(tag.Attributes["href"].Value));
                 }
                 if (tag.Attributes.Contains("title") &&
-                  tag.Attributes["title"].Value.EndsWith("albums"))
+                  tag.Attributes["title"].Value.EndsWith("albums", StringComparison.Ordinal))
                 {
-                    Console.WriteLine(tag.Attributes["href"].Value);
                     albumsLink = tag.Attributes["href"].Value.Replace("../", "");
                 }
             }
-            Console.WriteLine(albumsLink);
-
             albums = ParseAlbumPage(albumsLink);
 
             ArtistInfo artist = new ArtistInfo(parent.bandName, songs, tours, albums);
@@ -382,9 +401,14 @@ namespace DataCollector
         }
 
 
-        static List<string> ParseAlbumPage(string link)
+        public static List<string> ParseAlbumPage(string link)
         {
-            // Get all name of songs in the page
+            /* Get list of albums of an artist.
+             *
+             * Input: string link on artist's album.
+             * 
+             * Output: string list with artist albums.        
+             */
             List<string> albums = new List<string>();
             HtmlWeb webDoc = new HtmlWeb();
             HtmlDocument doc = webDoc.Load("https://www.setlist.fm/" + link);
@@ -412,9 +436,16 @@ namespace DataCollector
         }
 
 
-        static List<string> ParseTourPage(string link)
+        public static List<string> ParseTourPage(string link)
         {
-            // Get all name of songs in the page
+            /* Get list of songs from a particular
+             * tour.
+             *
+             * Input: string link on a tour.
+             * 
+             * Output: string list with songs from
+             * the tour.        
+             */
             List<string> songs = new List<string>();
             HtmlWeb webDoc = new HtmlWeb();
             HtmlDocument doc = webDoc.Load("https://www.setlist.fm/" + link);
@@ -432,6 +463,85 @@ namespace DataCollector
         }
 
 
+        public static void MainPageToFile(string path)
+        {
+            Globals.MainPageInfo = ParseMainPage();
+            string str = "";
+            for (var i = 0; i < 10; i++)
+            {
+                str += String.Join("\n", Globals.MainPageInfo[i].GetFields());
+                str += "\n";
+            }
+            str += "----------------------\n";
+            for (var i = 10; i < 20; i++)
+            {
+                str += String.Join("\n", Globals.MainPageInfo[i].GetFields());
+                str += "\n";
+            }
+            str += "----------------------\n";
+            for (var i = 20; i < 30; i++)
+            {
+                str += String.Join("\n", Globals.MainPageInfo[i].GetFields());
+                str += "\n";
+            }
+            str += "----------------------\n";
+            Console.WriteLine(str);
+            File.WriteAllText(path, str);
+        }
+
+        public static void TopSetlist(string path)
+        {
+            Globals.TopSetlists = ParseTopSetlistsPage();
+            string str = "";
+            for (var i = 0; i < 10; i++)
+            {
+                str += String.Join("\n", Globals.TopSetlists[i].GetFields());
+                str += "\n";
+            }
+            Console.WriteLine(str);
+            File.WriteAllText(path, str);
+        }
+
+        public static void OneSetlistInfo(string path)
+        {
+            SetlistInfo check = ParseSetlistPage(Globals.MainPageInfo[0].link, Globals.MainPageInfo[0].bandName);
+            ArtistInfo artist = ParseArtistPage(check);
+            string str = $"Artist name: {artist.bandName}\n\n";
+            str += "------------------------------";
+            str += "All songs\n";
+            foreach (var song in artist.songs)
+            {
+                str += song;
+                str += "\n";
+            }
+            str += "------------------------------";
+            str += "Tours\n";
+            foreach (KeyValuePair<string, List<string>> keyValue in artist.tours)
+            {
+                str += keyValue.Key;
+                str += "\n";
+                foreach (var song in keyValue.Value)
+                {
+                    str += $"    {song}\n";
+                }
+                str += "\n";
+            }
+            str += "------------------------------";
+            str += "Albums\n";
+            foreach (var album in artist.albums)
+            {
+                str += album;
+                str += "\n";
+            }
+            str += "------------------------------";
+            str += "Setlist songs\n";
+            foreach (var song in check.songs)
+            {
+                str += song;
+                str += "\n";
+            }
+            File.WriteAllText(path, str);
+        }
 
     }
 }

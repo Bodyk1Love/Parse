@@ -1,10 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DataCollector
+﻿namespace DataCollector
 {
     public class TopSetlistInfo
     {
+        /* Class describes top setlists page object.
+         * It keeps info about artist/band name,
+         * location of an event and a link on a
+         * setlist.        
+         * 
+         * ParseTopSetlistsPage() function get 
+         * all data from top setlists page and make 
+         * an object of this class.
+         * 
+         * this.GetFields() function returns all printable
+         * data in a string array.
+         */
+
         public string bandName, location, link;
 
         public TopSetlistInfo(string bandName, string location, string link)
@@ -14,9 +24,10 @@ namespace DataCollector
             this.link = link;
         }
 
-        public void printInfo()
+        public string[] GetFields()
         {
-            Console.WriteLine($"Band: {bandName}, Location: {location}, Link: {link}");
+            string[] data = { bandName, location };
+            return data;
         }
     }
 }

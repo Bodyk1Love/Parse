@@ -1,20 +1,19 @@
 ﻿<Properties StartupConfiguration="{5F143CBE-0539-43EF-BAE9-F61B70C48CB3}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Setlist/MainWindow.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Setlist/Globals.cs">
     <Files>
-      <File FileName="../DataCollector/DataCollector/Program.cs" Line="436" Column="6" />
-      <File FileName="Setlist/MainWindow.cs" Line="66" Column="10" />
-      <File FileName="Setlist/Globals.cs" Line="9" Column="55" />
-      <File FileName="Setlist/ArtistInfo.cs" Line="20" Column="10" />
-      <File FileName="Setlist/SetlistInfo.cs" Line="29" Column="2" />
-      <File FileName="Setlist/MainInfo.cs" Line="20" Column="9" />
-      <File FileName="Setlist/TopSetlistInfo.cs" Line="8" Column="30" />
+      <File FileName="Setlist/Globals.cs" Line="15" Column="1" />
+      <File FileName="Setlist/ArtistInfo.cs" Line="33" Column="6" />
+      <File FileName="Setlist/SetlistInfo.cs" Line="22" Column="13" />
+      <File FileName="Setlist/MainInfo.cs" Line="41" Column="6" />
+      <File FileName="Setlist/TopSetlistInfo.cs" Line="15" Column="59" />
+      <File FileName="Setlist/MainWindow.cs" Line="375" Column="11" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Setlist" expanded="True">
             <Node name="Setlist" expanded="True">
-              <Node name="MainWindow.cs" selected="True" />
+              <Node name="Globals.cs" selected="True" />
             </Node>
           </Node>
         </State>
@@ -23,9 +22,6 @@
         <State name="__root__">
           <Node name="Setlist" expanded="True" selected="True" />
         </State>
-      </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
