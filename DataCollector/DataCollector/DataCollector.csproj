@@ -57,6 +57,7 @@
     <Compile Include="MainInfo.cs" />
     <Compile Include="SetlistInfo.cs" />
     <Compile Include="ArtistInfo.cs" />
+    <Compile Include="TopSetlistInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

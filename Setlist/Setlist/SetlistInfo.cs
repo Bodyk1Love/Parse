@@ -18,5 +18,12 @@ namespace Setlist
             this.artistLink = artistLink;
             this.songs = songs;
         }
+
+        public SetlistInfo(string bandName, string artistLink, List<string> songs)
+        {
+            this.bandName = bandName;
+            this.artistLink = artistLink;
+            this.songs = songs;
+        }
     }
 }

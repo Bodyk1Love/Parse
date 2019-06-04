@@ -25,22 +25,36 @@ namespace DataCollector
             //Console.WriteLine("Get artists links...");
             //List<string> links = GetLinkOnArtist();
             //Console.WriteLine("Done!");
+            //Dictionary<string, string> Artists = new Dictionary<string, string>();
+            //string[] AllArtistsOnLetter = GenerateAllLinks(links[0]);
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    var page = GetArtistLink(AllArtistsOnLetter[i]);
+            //    foreach (KeyValuePair<string, string> keyValue in page)
+            //    {
+            //        Artists.Add(keyValue.Key, keyValue.Value);
+            //    }
+            //}
+            //foreach (var name in Artists.Keys)
+            //{
+            //    Console.WriteLine(name);
+            //}
             //List<string> AllArtists = new List<string>();
             //foreach (var link in links)
             //{
             //    AllArtists.AddRange(GenerateAllLinks(link));
             //}
-            //foreach (var link in AllArtists)
-            //{
-            //    File.AppendAllText(path, link + Environment.NewLine);
-            //}
+            ////foreach (var link in AllArtists)
+            ////{
+            ////    File.AppendAllText(path, link + Environment.NewLine);
+            ////}
             //foreach (var link in AllArtists)
             //{
             //    Console.WriteLine(link);
             //    Dictionary<string, string> Artists = GetArtistLink(link);
             //    foreach (KeyValuePair<string, string> keyValue in Artists)
             //    {
-            //        File.AppendAllText(path, keyValue.Key + '|' + keyValue.Value + Environment.NewLine);
+            //        //File.AppendAllText(path, keyValue.Key + '|' + keyValue.Value + Environment.NewLine);
             //        Console.WriteLine("DONE...");
             //    }
             //}
@@ -58,24 +72,29 @@ namespace DataCollector
             //    List<string> songs = GetSongs(statistics);
             //    Console.WriteLine("Done...");
 
-            //    Console.WriteLine("Add to file...");
-            //    foreach (var song in songs)
-            //    {
-            //        csv.AppendLine($"{keyValue.Value},{song}");
-            //        File.WriteAllText(path, csv.ToString());
-            //    }
+            //    //Console.WriteLine("Add to file...");
+            //    //foreach (var song in songs)
+            //    //{
+            //    //    csv.AppendLine($"{keyValue.Value},{song}");
+            //    //    File.WriteAllText(path, csv.ToString());
+            //    //}
 
             //    Console.WriteLine("Done...");
             //}
-            List<MainInfo> MainPageInfo = ParseMainPage();
-            Console.WriteLine(MainPageInfo.Count);
-            SetlistInfo check = ParseSetlistPage(MainPageInfo[2]);
+            //List<MainInfo> MainPageInfo = ParseMainPage();
+            //Console.WriteLine(MainPageInfo.Count);
+            //SetlistInfo check = ParseSetlistPage(MainPageInfo[11]);
             //foreach(string s in check.songs)
             //{
             //    Console.WriteLine(s);
             //}
-            ArtistInfo artist = ParseArtistPage(check);
-            artist.printInfo();
+            //ArtistInfo artist = ParseArtistPage(check);
+            //artist.printInfo();
+            List<TopSetlistInfo> Top = ParseTopSetlistsPage();
+            foreach(var i in Top)
+            {
+                i.printInfo();
+            }
         }
 
 
@@ -264,6 +283,31 @@ namespace DataCollector
                 }
             }
             return MainPage;
+        }
+
+        static List<TopSetlistInfo> ParseTopSetlistsPage()
+        {
+            HtmlWeb webDoc = new HtmlWeb();
+            HtmlDocument doc = webDoc.Load("https://www.setlist.fm/setlists");
+            HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//a");
+            List<TopSetlistInfo> TopSetlists = new List<TopSetlistInfo>();
+            foreach (var tag in nodes)
+            {
+                if (tag.Attributes.Contains("class") &&
+                    tag.Attributes["class"].Value == "twoLineLink")
+
+                {
+                    string observeLink = tag.Attributes["href"].Value;
+                    string[] txt = tag.InnerText.Split(
+                                    new[] { Environment.NewLine },
+                                    StringSplitOptions.None
+                    );
+                    txt = txt.Where(c => c != "").ToArray();
+                    TopSetlistInfo obj = new TopSetlistInfo(clean(txt[0]), txt[1], observeLink);
+                    TopSetlists.Add(obj);
+                }
+            }
+            return TopSetlists;
         }
 
         static SetlistInfo ParseSetlistPage(MainInfo parent)
