@@ -41,12 +41,12 @@ public partial class MainWindow : Gtk.Window
                 tag.Attributes["title"].Value.StartsWith("View this", StringComparison.Ordinal))
 
             {
-                string observeLink = tag.Attributes["href"].Value;
                 string[] txt = tag.InnerText.Split(
-                                new[] { Environment.NewLine },
+                                new[] { "\n" },
                                 StringSplitOptions.None
                 );
                 txt = txt.Where(c => c != "").ToArray();
+                string observeLink = tag.Attributes["href"].Value;
                 MainInfo obj = new MainInfo(clean(txt[0]), clean(txt[1]), txt[2], txt[3], txt[4], observeLink);
                 MainPage.Add(obj);
             }
@@ -54,7 +54,43 @@ public partial class MainWindow : Gtk.Window
         return MainPage;
     }
 
+    public static SearchingInfo ParseSearchingPage(string link)
+    {
+        /* Get list of setlists from
+         * the page of artist that user
+         * is searching for from         
+         * https://www.setlist.fm/search?query=
+         * link        
+         * 
+         * 
+         * Output: list of MainInfo objects
+         * (see info in MainInfo.cs)
+         */
+        HtmlWeb webDoc = new HtmlWeb();
+        HtmlDocument doc = webDoc.Load("https://www.setlist.fm/search?query=" + link);
+        HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//a");
+        Dictionary<string, string> Setlists = new Dictionary<string, string>();
+        string artistLink = "";
+        foreach (var tag in nodes)
+        {
+            if (tag.Attributes.Contains("title") &&
+               tag.Attributes["title"].Value == "View song statistics of all setlists")
+            {
+                artistLink = tag.Attributes["href"].Value.Replace("../", "");
+            }
+            if (!tag.Attributes.Contains("class") &&
+                tag.Attributes.Contains("title") &&
+                tag.Attributes["title"].Value.StartsWith("View this", StringComparison.Ordinal))
 
+            {
+                string observeLink = tag.Attributes["href"].Value.Replace("../", "");
+                string txt = tag.InnerText;
+                Setlists.Add(observeLink, txt);
+            }
+        }
+        SearchingInfo SearchingPage = new SearchingInfo(link, Setlists, artistLink);
+        return SearchingPage;
+    }
 
 
     public static string clean(string s)
@@ -67,6 +103,8 @@ public partial class MainWindow : Gtk.Window
         sb.Replace("&nbsp;", " ");
         return sb.ToString();
     }
+
+
 
     public static SetlistInfo ParseSetlistPage(MainInfo parent)
     {
@@ -93,7 +131,7 @@ public partial class MainWindow : Gtk.Window
                 artistLink = tag.Attributes["href"].Value.Replace("../", "");
             }
         }
-        if(songs.Count == 0)
+        if (songs.Count == 0)
         {
             songs.Add("Nothing");
         }
@@ -145,7 +183,7 @@ public partial class MainWindow : Gtk.Window
     }
 
 
-    public static ArtistInfo ParseArtistPage(SetlistInfo parent)
+    public static ArtistInfo ParseArtistPage(string link, string bandName)
     {
         /* Get main info from artist page.
         *
@@ -156,12 +194,12 @@ public partial class MainWindow : Gtk.Window
         * (see info in ArtistInfo.cs)          
         */
         List<string> songs = new List<string>();
-        Dictionary<string, List<string>> tours = new Dictionary<string, List<string>>();
+        Dictionary<string, string> tours = new Dictionary<string, string>();
         List<string> albums = new List<string>();
         string albumsLink = "";
 
         HtmlWeb webDoc = new HtmlWeb();
-        HtmlDocument doc = webDoc.Load("https://www.setlist.fm/" + parent.artistLink);
+        HtmlDocument doc = webDoc.Load("https://www.setlist.fm/" + link);
         HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//a");
         foreach (var tag in nodes)
         {
@@ -177,7 +215,7 @@ public partial class MainWindow : Gtk.Window
               tag.Attributes["title"].Value.StartsWith("Show song statistics of the tour", StringComparison.Ordinal))
             {
                 var name = clean(tag.InnerText.Trim());
-                tours.Add(name, ParseTourPage(tag.Attributes["href"].Value));
+                tours.Add(tag.Attributes["href"].Value.Replace("../", ""), name);
             }
             if (tag.Attributes.Contains("title") &&
               tag.Attributes["title"].Value.EndsWith("albums", StringComparison.Ordinal))
@@ -187,7 +225,7 @@ public partial class MainWindow : Gtk.Window
         }
         albums = ParseAlbumPage(albumsLink);
 
-        ArtistInfo artist = new ArtistInfo(parent.bandName, songs, tours, albums);
+        ArtistInfo artist = new ArtistInfo(bandName, songs, tours, albums);
         return artist;
     }
 
@@ -225,6 +263,7 @@ public partial class MainWindow : Gtk.Window
         }
         return albums;
     }
+
 
 
     public static List<string> ParseTourPage(string link)
@@ -407,124 +446,155 @@ public partial class MainWindow : Gtk.Window
 
 
 
-
-    protected void OnButton1Clicked(object sender, EventArgs e)
+    protected void OnLoadMainPageClicked(object sender, EventArgs e)
     {
         Globals.MainPageInfo = ParseMainPage();
         for (var i = 0; i < 10; i++)
         {
-            combobox1.AppendText(String.Join("\n", Globals.MainPageInfo[i].GetFields()));
+            PopularSetlistsMenu.AppendText(String.Join("\n", Globals.MainPageInfo[i].GetFields()));
         }
         for (var i = 10; i < 20; i++)
         {
-            combobox2.AppendText(String.Join("\n", Globals.MainPageInfo[i].GetFields()));
+            UpcomingEventsMenu.AppendText(String.Join("\n", Globals.MainPageInfo[i].GetFields()));
         }
         for (var i = 20; i < 30; i++)
         {
-            combobox3.AppendText(String.Join("\n", Globals.MainPageInfo[i].GetFields()));
+            RecentEditsMenu.AppendText(String.Join("\n", Globals.MainPageInfo[i].GetFields()));
         }
-
     }
 
 
-    protected void OnButton2Clicked(object sender, EventArgs e)
+    protected void OnLoadArtistsButtonClicked(object sender, EventArgs e)
     {
         Globals.artists = GetLinksOnArtists();
     }
 
 
-
-    protected void OnButton3Clicked(object sender, EventArgs e)
+    protected void OnLoadTopSetlistsButtonClicked(object sender, EventArgs e)
     {
         Globals.TopSetlists = ParseTopSetlistsPage();
         for (var i = 0; i < 10; i++)
         {
-            combobox10.AppendText(String.Join("\n", Globals.TopSetlists[i].GetFields()));
+            TopSetlistsMenu.AppendText(String.Join("\n", Globals.TopSetlists[i].GetFields()));
         }
     }
 
 
-    protected void OnCombobox1Changed(object sender, EventArgs e)
+    protected void OnFindArtisButtonClicked(object sender, EventArgs e)
+    {
+        for (int i = 0; i < 50; i++)
+        {
+            ArtistTopSetlists.RemoveText(0);
+        }
+        clear();
+        string SearchingData = entry1.Text;
+        string[] SeachingTokens = SearchingData.ToLower().Split();
+        string SearchingString = String.Join("+", SeachingTokens);
+        Globals.SearchingPageInfo = ParseSearchingPage(SearchingString);
+        for (int i = 0, j = Globals.SearchingPageInfo.Setlists.Count; i < j; i++)
+        {
+            ArtistTopSetlists.AppendText(Globals.SearchingPageInfo.Setlists.Values.ElementAt(i));
+        }
+        Globals.CurrentArtist = ParseArtistPage(Globals.SearchingPageInfo.artistLink, Globals.SearchingPageInfo.bandName);
+        Globals.Tours = new Dictionary<List<string>, string>();
+        Globals.CurrentArtistToursLinks = Globals.CurrentArtist.tours.Keys.ToList();
+        label1.Text = Globals.CurrentArtist.bandName;
+        foreach (var song in Globals.CurrentArtist.songs)
+        {
+            AllArtistSongsMenu.AppendText(song);
+        }
+        foreach (var tour in Globals.CurrentArtist.tours.Values)
+        {
+            ArtistToursMenu.AppendText(tour);
+        }
+        foreach (var album in Globals.CurrentArtist.albums)
+        {
+            ArtistAlbumsMenu.AppendText(album);
+        }
+    }
+
+    protected void OnPopularSetlistsMenuChanged(object sender, EventArgs e)
     {
         clear();
-        var id = combobox1.Active;
-        label1.Text = $"Got id {id.ToString()}";
+        var id = PopularSetlistsMenu.Active;
         SetlistInfo check = ParseSetlistPage(Globals.MainPageInfo[id]);
-        label1.Text = "Setlist parsed!!";
-        ArtistInfo artist = ParseArtistPage(check);
-        label1.Text = "Artist got!";
-        label1.Text = artist.bandName;
-        foreach (var song in artist.songs)
+        Globals.CurrentArtist = ParseArtistPage(check.artistLink, check.bandName);
+        label1.Text = Globals.CurrentArtist.bandName;
+        Globals.CurrentArtistToursLinks = Globals.CurrentArtist.tours.Keys.ToList();
+        foreach (var song in Globals.CurrentArtist.songs)
         {
-            combobox6.AppendText(song);
+            AllArtistSongsMenu.AppendText(song);
         }
-        foreach (var tour in artist.tours.Keys)
+        foreach (var tour in Globals.CurrentArtist.tours.Values)
         {
-            combobox7.AppendText(tour);
+            ArtistToursMenu.AppendText(tour);
         }
-        foreach (var album in artist.albums)
+        foreach (var album in Globals.CurrentArtist.albums)
         {
-            combobox8.AppendText(album);
+            ArtistAlbumsMenu.AppendText(album);
         }
         foreach (var song in check.songs)
         {
-            combobox5.AppendText(song);
+            SongsInSetlistMenu.AppendText(song);
         }
     }
 
-    protected void OnCombobox2Changed(object sender, EventArgs e)
+    protected void OnUpcomingEventsMenuChanged(object sender, EventArgs e)
     {
         clear();
-        var id = combobox2.Active + 10;
+        var id = UpcomingEventsMenu.Active + 10;
         SetlistInfo check = ParseSetlistPage(Globals.MainPageInfo[id]);
-        ArtistInfo artist = ParseArtistPage(check);
-        label1.Text = artist.bandName;
-        foreach (var song in artist.songs)
+        Globals.CurrentArtist = ParseArtistPage(check.artistLink, check.bandName);
+        Globals.CurrentArtistToursLinks = Globals.CurrentArtist.tours.Keys.ToList();
+        label1.Text = Globals.CurrentArtist.bandName;
+        foreach (var song in Globals.CurrentArtist.songs)
         {
-            combobox6.AppendText(song);
+            AllArtistSongsMenu.AppendText(song);
         }
-        foreach (var tour in artist.tours.Keys)
+        foreach (var tour in Globals.CurrentArtist.tours.Values)
         {
-            combobox7.AppendText(tour);
+            ArtistToursMenu.AppendText(tour);
         }
-        foreach (var album in artist.albums)
+        foreach (var album in Globals.CurrentArtist.albums)
         {
-            combobox8.AppendText(album);
+            ArtistAlbumsMenu.AppendText(album);
         }
         foreach (var song in check.songs)
         {
-            combobox5.AppendText(song);
+            SongsInSetlistMenu.AppendText(song);
         }
     }
 
-    protected void OnCombobox3Changed(object sender, EventArgs e)
+    protected void OnRecentEditsMenuChanged(object sender, EventArgs e)
     {
         clear();
-        var id = combobox3.Active + 20;
+        var id = RecentEditsMenu.Active + 20;
         SetlistInfo check = ParseSetlistPage(Globals.MainPageInfo[id]);
-        ArtistInfo artist = ParseArtistPage(check);
-        label1.Text = artist.bandName;
-        foreach (var song in artist.songs)
+        Globals.CurrentArtist = ParseArtistPage(check.artistLink, check.bandName);
+        Globals.CurrentArtistToursLinks = Globals.CurrentArtist.tours.Keys.ToList();
+        label1.Text = Globals.CurrentArtist.bandName;
+        foreach (var song in Globals.CurrentArtist.songs)
         {
-            combobox6.AppendText(song);
+            AllArtistSongsMenu.AppendText(song);
         }
-        foreach (var tour in artist.tours.Keys)
+        foreach (var tour in Globals.CurrentArtist.tours.Values)
         {
-            combobox7.AppendText(tour);
+            ArtistToursMenu.AppendText(tour);
         }
-        foreach (var album in artist.albums)
+        foreach (var album in Globals.CurrentArtist.albums)
         {
-            combobox8.AppendText(album);
+            ArtistAlbumsMenu.AppendText(album);
         }
         foreach (var song in check.songs)
         {
-            combobox5.AppendText(song);
+            SongsInSetlistMenu.AppendText(song);
         }
     }
 
-    protected void OnCombobox4Changed(object sender, EventArgs e)
+
+    protected void OnArtistByFirstLetterMenuChanged(object sender, EventArgs e)
     {
-        var id = combobox4.Active;
+        var id = ArtistByFirstLetterMenu.Active;
         try
         {
             string[] AllArtistsOnLetter = GenerateAllLinks(Globals.artists[id]);
@@ -551,91 +621,119 @@ public partial class MainWindow : Gtk.Window
 
     }
 
-    protected void OnCombobox7Changed(object sender, EventArgs e)
+
+    protected void OnArtistToursMenuChanged(object sender, EventArgs e)
     {
         for (int i = 0; i < 200; i++)
         {
-            combobox5.RemoveText(0);
+            SongsInTourMenu.RemoveText(0);
         }
-        int id = combobox7.Active;
-        try
+        int id = ArtistToursMenu.Active;
+        if (id >= 0)
         {
-            List<string> tourSongs = Globals.tours.Keys.ElementAt(id);
-            foreach (var song in tourSongs)
+            try
             {
-                combobox5.AppendText(song);
+                List<string> tourSongs = ParseTourPage(Globals.CurrentArtistToursLinks[id]);
+                foreach (var song in tourSongs)
+                {
+                    SongsInTourMenu.AppendText(song);
+                }
             }
-        }
-        catch (Exception)
-        {
-            combobox5.AppendText("Nothing");
+            catch (Exception ex)
+            {
+                SongsInTourMenu.AppendText("Nothing" + ex);
+            }
         }
     }
 
-  
-
-  
 
     protected void OnCombobox9Changed(object sender, EventArgs e)
     {
         clear();
         var id = combobox9.Active;
         SetlistInfo check = ParseSetlistPage(Globals.Artists.Keys.ElementAt(id), combobox9.ActiveText);
-        ArtistInfo artist = ParseArtistPage(check);
-        label1.Text = artist.bandName;
-        foreach (var song in artist.songs)
+        Globals.CurrentArtist = ParseArtistPage(check.artistLink, check.bandName);
+        Globals.CurrentArtistToursLinks = Globals.CurrentArtist.tours.Keys.ToList();
+        label1.Text = Globals.CurrentArtist.bandName;
+        foreach (var song in Globals.CurrentArtist.songs)
         {
-            combobox6.AppendText(song);
+            AllArtistSongsMenu.AppendText(song);
         }
-        foreach (var tour in artist.tours.Keys)
+        foreach (var tour in Globals.CurrentArtist.tours.Values)
         {
-            combobox7.AppendText(tour);
+            ArtistToursMenu.AppendText(tour);
         }
-        foreach (var album in artist.albums)
+        foreach (var album in Globals.CurrentArtist.albums)
         {
-            combobox8.AppendText(album);
+            ArtistAlbumsMenu.AppendText(album);
         }
         foreach (var song in check.songs)
         {
-            combobox5.AppendText(song);
+            SongsInSetlistMenu.AppendText(song);
         }
     }
 
-  
 
-    protected void OnCombobox10Changed(object sender, EventArgs e)
+    protected void OnTopSetlistsMenuChanged(object sender, EventArgs e)
     {
         clear();
-        var id = combobox10.Active;
+        var id = TopSetlistsMenu.Active;
         SetlistInfo check = ParseSetlistPage(Globals.TopSetlists[id].link, Globals.TopSetlists[id].bandName);
-        ArtistInfo artist = ParseArtistPage(check);
-        label1.Text = artist.bandName;
-        foreach (var song in artist.songs)
+        Globals.CurrentArtist = ParseArtistPage(check.artistLink, check.bandName);
+        Globals.CurrentArtistToursLinks = Globals.CurrentArtist.tours.Keys.ToList();
+        label1.Text = Globals.CurrentArtist.bandName;
+        foreach (var song in Globals.CurrentArtist.songs)
         {
-            combobox6.AppendText(song);
+            AllArtistSongsMenu.AppendText(song);
         }
-        foreach (var tour in artist.tours.Keys)
+        foreach (var tour in Globals.CurrentArtist.tours.Values)
         {
-            combobox7.AppendText(tour);
+            ArtistToursMenu.AppendText(tour);
         }
-        foreach (var album in artist.albums)
+        foreach (var album in Globals.CurrentArtist.albums)
         {
-            combobox8.AppendText(album);
+            ArtistAlbumsMenu.AppendText(album);
         }
         foreach (var song in check.songs)
         {
-            combobox5.AppendText(song);
+            SongsInSetlistMenu.AppendText(song);
         }
     }
+
+    protected void OnArtistTopSetlistsChanged(object sender, EventArgs e)
+    {
+        var id = ArtistTopSetlists.Active;
+        for (int i = 0; i < 100; i++)
+        {
+            SongsInSetlistMenu.RemoveText(0);
+        }
+        try
+        {
+            SetlistInfo check = ParseSetlistPage(Globals.SearchingPageInfo.Setlists.Keys.ElementAt(id), Globals.SearchingPageInfo.bandName);
+            foreach (var song in check.songs)
+            {
+                SongsInSetlistMenu.AppendText(song);
+            }
+        }
+        catch (Exception ex)
+        {
+            label1.Text = ex.ToString();
+        }
+    }
+
 
     public void clear()
     {
         for (int i = 0; i < 200; i++)
         {
-            combobox5.RemoveText(0);
-            combobox6.RemoveText(0);
-            combobox7.RemoveText(0);
-            combobox8.RemoveText(0);
+            SongsInSetlistMenu.RemoveText(0);
+            AllArtistSongsMenu.RemoveText(0);
+            ArtistToursMenu.RemoveText(0);
+            ArtistAlbumsMenu.RemoveText(0);
         }
     }
+
+
+
+   
 }

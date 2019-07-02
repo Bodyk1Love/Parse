@@ -81,6 +81,7 @@
     <Compile Include="ArtistInfo.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="TopSetlistInfo.cs" />
+    <Compile Include="SearchingInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

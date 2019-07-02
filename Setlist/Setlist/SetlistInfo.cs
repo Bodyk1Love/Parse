@@ -40,5 +40,7 @@ namespace Setlist
             this.artistLink = artistLink;
             this.songs = songs;
         }
+
+
     }
 }
