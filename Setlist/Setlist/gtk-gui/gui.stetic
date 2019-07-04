@@ -6,7 +6,7 @@
   <import>
     <widget-library name="../bin/Debug/Setlist.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="924 464">
+  <widget class="Gtk.Window" id="MainWindow" design-size="615 405">
     <property name="MemberName" />
     <property name="Title" translatable="yes">MainWindow</property>
     <property name="WindowPosition">CenterOnParent</property>
@@ -22,6 +22,7 @@
             <child>
               <widget class="Gtk.Label" id="label2">
                 <property name="MemberName" />
+                <property name="Visible">False</property>
                 <property name="LabelProp" translatable="yes">Popular Setlists</property>
               </widget>
               <packing>
@@ -34,6 +35,7 @@
             <child>
               <widget class="Gtk.ComboBox" id="PopularSetlistsMenu">
                 <property name="MemberName" />
+                <property name="Visible">False</property>
                 <property name="IsTextCombo">True</property>
                 <property name="Items" translatable="yes" />
                 <signal name="Changed" handler="OnPopularSetlistsMenuChanged" />
@@ -41,11 +43,14 @@
               <packing>
                 <property name="Position">1</property>
                 <property name="AutoSize">False</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
               </packing>
             </child>
             <child>
               <widget class="Gtk.Label" id="label3">
                 <property name="MemberName" />
+                <property name="Visible">False</property>
                 <property name="LabelProp" translatable="yes">Upcoming Events</property>
               </widget>
               <packing>
@@ -58,6 +63,7 @@
             <child>
               <widget class="Gtk.ComboBox" id="UpcomingEventsMenu">
                 <property name="MemberName" />
+                <property name="Visible">False</property>
                 <property name="IsTextCombo">True</property>
                 <property name="Items" translatable="yes" />
                 <signal name="Changed" handler="OnUpcomingEventsMenuChanged" />
@@ -65,11 +71,14 @@
               <packing>
                 <property name="Position">3</property>
                 <property name="AutoSize">False</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
               </packing>
             </child>
             <child>
               <widget class="Gtk.Label" id="label4">
                 <property name="MemberName" />
+                <property name="Visible">False</property>
                 <property name="LabelProp" translatable="yes">Recent Edits</property>
               </widget>
               <packing>
@@ -82,12 +91,25 @@
             <child>
               <widget class="Gtk.ComboBox" id="RecentEditsMenu">
                 <property name="MemberName" />
+                <property name="Visible">False</property>
                 <property name="IsTextCombo">True</property>
                 <property name="Items" translatable="yes" />
                 <signal name="Changed" handler="OnRecentEditsMenuChanged" />
               </widget>
               <packing>
                 <property name="Position">5</property>
+                <property name="AutoSize">False</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="label15">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes" />
+              </widget>
+              <packing>
+                <property name="Position">6</property>
                 <property name="AutoSize">False</property>
               </packing>
             </child>
@@ -101,8 +123,9 @@
                 <signal name="Clicked" handler="OnLoadMainPageClicked" />
               </widget>
               <packing>
-                <property name="Position">6</property>
+                <property name="Position">7</property>
                 <property name="AutoSize">False</property>
+                <property name="Expand">False</property>
                 <property name="Fill">False</property>
               </packing>
             </child>
@@ -110,19 +133,276 @@
           <packing>
             <property name="Position">0</property>
             <property name="AutoSize">False</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
           </packing>
         </child>
         <child>
-          <widget class="Gtk.ComboBox" id="SongsInTourMenu">
+          <widget class="Gtk.VBox" id="vbox6">
             <property name="MemberName" />
-            <property name="IsTextCombo">True</property>
-            <property name="Items" translatable="yes" />
+            <property name="Spacing">6</property>
+            <child>
+              <widget class="Gtk.VBox" id="vbox7">
+                <property name="MemberName" />
+                <property name="Spacing">6</property>
+                <child>
+                  <widget class="Gtk.Label" id="label1">
+                    <property name="MemberName" />
+                    <property name="Visible">False</property>
+                    <property name="LabelProp" translatable="yes">Artist</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.VBox" id="vbox8">
+                    <property name="MemberName" />
+                    <property name="Spacing">6</property>
+                    <child>
+                      <widget class="Gtk.HBox" id="hbox2">
+                        <property name="MemberName" />
+                        <property name="Spacing">6</property>
+                        <child>
+                          <widget class="Gtk.Label" id="label5">
+                            <property name="MemberName" />
+                            <property name="Visible">False</property>
+                            <property name="LabelProp" translatable="yes">All songs</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.Label" id="label6">
+                            <property name="MemberName" />
+                            <property name="Visible">False</property>
+                            <property name="LabelProp" translatable="yes">Albums</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.Label" id="label7">
+                            <property name="MemberName" />
+                            <property name="Visible">False</property>
+                            <property name="LabelProp" translatable="yes">Tours</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">2</property>
+                            <property name="AutoSize">False</property>
+                          </packing>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.HBox" id="hbox3">
+                        <property name="MemberName" />
+                        <property name="Spacing">6</property>
+                        <child>
+                          <widget class="Gtk.ComboBox" id="AllArtistSongsMenu">
+                            <property name="MemberName" />
+                            <property name="Visible">False</property>
+                            <property name="IsTextCombo">True</property>
+                            <property name="Items" translatable="yes" />
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.ComboBox" id="ArtistAlbumsMenu">
+                            <property name="MemberName" />
+                            <property name="Visible">False</property>
+                            <property name="IsTextCombo">True</property>
+                            <property name="Items" translatable="yes" />
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.ComboBox" id="ArtistToursMenu">
+                            <property name="MemberName" />
+                            <property name="Visible">False</property>
+                            <property name="IsTextCombo">True</property>
+                            <property name="Items" translatable="yes" />
+                            <signal name="Changed" handler="OnArtistToursMenuChanged" />
+                          </widget>
+                          <packing>
+                            <property name="Position">2</property>
+                            <property name="AutoSize">False</property>
+                          </packing>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="Position">1</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.VBox" id="vbox9">
+                <property name="MemberName" />
+                <property name="Spacing">6</property>
+                <child>
+                  <widget class="Gtk.Label" id="label8">
+                    <property name="MemberName" />
+                    <property name="Visible">False</property>
+                    <property name="LabelProp" translatable="yes">Songs in setlist</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.ComboBox" id="SongsInSetlistMenu">
+                    <property name="MemberName" />
+                    <property name="Visible">False</property>
+                    <property name="IsTextCombo">True</property>
+                    <property name="Items" translatable="yes" />
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="label10">
+                <property name="MemberName" />
+                <property name="Visible">False</property>
+                <property name="LabelProp" translatable="yes">Songs in tour</property>
+              </widget>
+              <packing>
+                <property name="Position">2</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.ComboBox" id="SongsInTourMenu">
+                <property name="MemberName" />
+                <property name="Visible">False</property>
+                <property name="IsTextCombo">True</property>
+                <property name="Items" translatable="yes" />
+              </widget>
+              <packing>
+                <property name="Position">3</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="label13">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes" />
+              </widget>
+              <packing>
+                <property name="Position">4</property>
+                <property name="AutoSize">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.VBox" id="vbox10">
+                <property name="MemberName" />
+                <property name="Spacing">6</property>
+                <child>
+                  <widget class="Gtk.Label" id="label12">
+                    <property name="MemberName" />
+                    <property name="Visible">False</property>
+                    <property name="LabelProp" translatable="yes">Top setlists page</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.ComboBox" id="TopSetlistsMenu">
+                    <property name="MemberName" />
+                    <property name="Visible">False</property>
+                    <property name="IsTextCombo">True</property>
+                    <property name="Items" translatable="yes" />
+                    <signal name="Changed" handler="OnTopSetlistsMenuChanged" />
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">False</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">5</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Button" id="LoadTopSetlistsButton">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Type">TextOnly</property>
+                <property name="Label" translatable="yes">TopSetlists</property>
+                <property name="UseUnderline">True</property>
+                <signal name="Clicked" handler="OnLoadTopSetlistsButtonClicked" />
+              </widget>
+              <packing>
+                <property name="Position">6</property>
+                <property name="AutoSize">False</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
           </widget>
           <packing>
             <property name="Position">1</property>
-            <property name="AutoSize">True</property>
+            <property name="AutoSize">False</property>
             <property name="Expand">False</property>
-            <property name="Fill">False</property>
           </packing>
         </child>
         <child>
@@ -134,91 +414,39 @@
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
                 <child>
-                  <widget class="Gtk.Label" id="label1">
+                  <widget class="Gtk.Label" id="label11">
                     <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes">Artist</property>
+                    <property name="Visible">False</property>
+                    <property name="LabelProp" translatable="yes">Setlists on found page</property>
                   </widget>
                   <packing>
                     <property name="Position">0</property>
-                    <property name="AutoSize">True</property>
+                    <property name="AutoSize">False</property>
                     <property name="Expand">False</property>
-                    <property name="Fill">False</property>
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.Label" id="label5">
+                  <widget class="Gtk.ComboBox" id="ArtistTopSetlists">
                     <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes">All songs</property>
+                    <property name="Visible">False</property>
+                    <property name="IsTextCombo">True</property>
+                    <property name="Items" translatable="yes" />
+                    <signal name="Changed" handler="OnArtistTopSetlistsChanged" />
                   </widget>
                   <packing>
                     <property name="Position">1</property>
-                    <property name="AutoSize">True</property>
+                    <property name="AutoSize">False</property>
                     <property name="Expand">False</property>
-                    <property name="Fill">False</property>
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.ComboBox" id="AllArtistSongsMenu">
+                  <widget class="Gtk.Label" id="label16">
                     <property name="MemberName" />
-                    <property name="IsTextCombo">True</property>
-                    <property name="Items" translatable="yes" />
+                    <property name="LabelProp" translatable="yes" />
                   </widget>
                   <packing>
                     <property name="Position">2</property>
                     <property name="AutoSize">False</property>
-                    <property name="Expand">False</property>
-                    <property name="Fill">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.Label" id="label6">
-                    <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes">Albums</property>
-                  </widget>
-                  <packing>
-                    <property name="Position">3</property>
-                    <property name="AutoSize">True</property>
-                    <property name="Expand">False</property>
-                    <property name="Fill">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.ComboBox" id="ArtistAlbumsMenu">
-                    <property name="MemberName" />
-                    <property name="IsTextCombo">True</property>
-                    <property name="Items" translatable="yes" />
-                  </widget>
-                  <packing>
-                    <property name="Position">4</property>
-                    <property name="AutoSize">True</property>
-                    <property name="Expand">False</property>
-                    <property name="Fill">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.Label" id="label7">
-                    <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes">Tours</property>
-                  </widget>
-                  <packing>
-                    <property name="Position">5</property>
-                    <property name="AutoSize">True</property>
-                    <property name="Expand">False</property>
-                    <property name="Fill">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.ComboBox" id="ArtistToursMenu">
-                    <property name="MemberName" />
-                    <property name="IsTextCombo">True</property>
-                    <property name="Items" translatable="yes" />
-                    <signal name="Changed" handler="OnArtistToursMenuChanged" />
-                  </widget>
-                  <packing>
-                    <property name="Position">6</property>
-                    <property name="AutoSize">True</property>
-                    <property name="Expand">False</property>
-                    <property name="Fill">False</property>
                   </packing>
                 </child>
                 <child>
@@ -227,8 +455,9 @@
                     <property name="LabelProp" translatable="yes">Search field</property>
                   </widget>
                   <packing>
-                    <property name="Position">7</property>
+                    <property name="Position">3</property>
                     <property name="AutoSize">False</property>
+                    <property name="Expand">False</property>
                   </packing>
                 </child>
                 <child>
@@ -239,7 +468,7 @@
                     <property name="InvisibleChar">•</property>
                   </widget>
                   <packing>
-                    <property name="Position">8</property>
+                    <property name="Position">4</property>
                     <property name="AutoSize">False</property>
                     <property name="Expand">False</property>
                     <property name="Fill">False</property>
@@ -255,97 +484,20 @@
                     <signal name="Clicked" handler="OnFindArtisButtonClicked" />
                   </widget>
                   <packing>
-                    <property name="Position">9</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.ComboBox" id="ArtistTopSetlists">
-                    <property name="MemberName" />
-                    <property name="IsTextCombo">True</property>
-                    <property name="Items" translatable="yes" />
-                    <signal name="Changed" handler="OnArtistTopSetlistsChanged" />
-                  </widget>
-                  <packing>
-                    <property name="Position">10</property>
+                    <property name="Position">5</property>
                     <property name="AutoSize">False</property>
                     <property name="Expand">False</property>
-                    <property name="Fill">False</property>
                   </packing>
                 </child>
               </widget>
               <packing>
                 <property name="Position">0</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
+                <property name="AutoSize">False</property>
               </packing>
             </child>
           </widget>
           <packing>
             <property name="Position">2</property>
-            <property name="AutoSize">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.VBox" id="vbox2">
-            <property name="MemberName" />
-            <property name="Spacing">6</property>
-            <child>
-              <widget class="Gtk.Label" id="label8">
-                <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">Songs on tour/setlist</property>
-              </widget>
-              <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.ComboBox" id="SongsInSetlistMenu">
-                <property name="MemberName" />
-                <property name="IsTextCombo">True</property>
-                <property name="Items" translatable="yes" />
-              </widget>
-              <packing>
-                <property name="Position">1</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.ComboBox" id="TopSetlistsMenu">
-                <property name="MemberName" />
-                <property name="IsTextCombo">True</property>
-                <property name="Items" translatable="yes" />
-                <signal name="Changed" handler="OnTopSetlistsMenuChanged" />
-              </widget>
-              <packing>
-                <property name="Position">2</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.Button" id="LoadTopSetlistsButton">
-                <property name="MemberName" />
-                <property name="CanFocus">True</property>
-                <property name="Type">TextOnly</property>
-                <property name="Label" translatable="yes">TopSetlists</property>
-                <property name="UseUnderline">True</property>
-                <signal name="Clicked" handler="OnLoadTopSetlistsButtonClicked" />
-              </widget>
-              <packing>
-                <property name="Position">3</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="Position">3</property>
             <property name="AutoSize">False</property>
           </packing>
         </child>
@@ -354,8 +506,22 @@
             <property name="MemberName" />
             <property name="Spacing">6</property>
             <child>
+              <widget class="Gtk.Label" id="label14">
+                <property name="MemberName" />
+                <property name="Visible">False</property>
+                <property name="LabelProp" translatable="yes">Search artist by letter</property>
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
               <widget class="Gtk.ComboBox" id="ArtistByFirstLetterMenu">
                 <property name="MemberName" />
+                <property name="Visible">False</property>
                 <property name="IsTextCombo">True</property>
                 <property name="Items" translatable="yes">A
 B
@@ -387,19 +553,34 @@ Z
                 <signal name="Changed" handler="OnArtistByFirstLetterMenuChanged" />
               </widget>
               <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">False</property>
+                <property name="Position">1</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
               </packing>
             </child>
             <child>
-              <widget class="Gtk.ComboBox" id="combobox9">
+              <widget class="Gtk.ComboBox" id="ListOfArtistsOnChosenLetter">
                 <property name="MemberName" />
+                <property name="Visible">False</property>
                 <property name="IsTextCombo">True</property>
                 <property name="Items" translatable="yes" />
-                <signal name="Changed" handler="OnCombobox9Changed" />
+                <signal name="Changed" handler="OnListOfArtistsOnChosenLetterChanged" />
               </widget>
               <packing>
-                <property name="Position">1</property>
+                <property name="Position">2</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="label17">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes" />
+              </widget>
+              <packing>
+                <property name="Position">3</property>
                 <property name="AutoSize">False</property>
               </packing>
             </child>
@@ -413,7 +594,7 @@ Z
                 <signal name="Clicked" handler="OnLoadArtistsButtonClicked" />
               </widget>
               <packing>
-                <property name="Position">2</property>
+                <property name="Position">4</property>
                 <property name="AutoSize">True</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>
@@ -421,8 +602,10 @@ Z
             </child>
           </widget>
           <packing>
-            <property name="Position">4</property>
+            <property name="Position">3</property>
             <property name="AutoSize">False</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
           </packing>
         </child>
       </widget>

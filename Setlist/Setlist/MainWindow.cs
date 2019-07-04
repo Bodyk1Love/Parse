@@ -432,7 +432,7 @@ public partial class MainWindow : Gtk.Window
             {
                 string observeLink = tag.Attributes["href"].Value;
                 string[] txt = tag.InnerText.Split(
-                                new[] { Environment.NewLine },
+                                new[] { "\n" },
                                 StringSplitOptions.None
                 );
                 txt = txt.Where(c => c != "").ToArray();
@@ -448,6 +448,7 @@ public partial class MainWindow : Gtk.Window
 
     protected void OnLoadMainPageClicked(object sender, EventArgs e)
     {
+        MainPageObjectsOn();
         Globals.MainPageInfo = ParseMainPage();
         for (var i = 0; i < 10; i++)
         {
@@ -466,12 +467,16 @@ public partial class MainWindow : Gtk.Window
 
     protected void OnLoadArtistsButtonClicked(object sender, EventArgs e)
     {
+        label14.Visible = true;
+        ArtistByFirstLetterMenu.Visible = true;
         Globals.artists = GetLinksOnArtists();
     }
 
 
     protected void OnLoadTopSetlistsButtonClicked(object sender, EventArgs e)
     {
+        label12.Visible = true;
+        TopSetlistsMenu.Visible = true;
         Globals.TopSetlists = ParseTopSetlistsPage();
         for (var i = 0; i < 10; i++)
         {
@@ -482,6 +487,9 @@ public partial class MainWindow : Gtk.Window
 
     protected void OnFindArtisButtonClicked(object sender, EventArgs e)
     {
+        ArtistInfoObjectsOn();
+        label11.Visible = true;
+        ArtistTopSetlists.Visible = true;
         for (int i = 0; i < 50; i++)
         {
             ArtistTopSetlists.RemoveText(0);
@@ -516,6 +524,7 @@ public partial class MainWindow : Gtk.Window
     protected void OnPopularSetlistsMenuChanged(object sender, EventArgs e)
     {
         clear();
+        ArtistInfoObjectsOn();
         var id = PopularSetlistsMenu.Active;
         SetlistInfo check = ParseSetlistPage(Globals.MainPageInfo[id]);
         Globals.CurrentArtist = ParseArtistPage(check.artistLink, check.bandName);
@@ -542,6 +551,7 @@ public partial class MainWindow : Gtk.Window
     protected void OnUpcomingEventsMenuChanged(object sender, EventArgs e)
     {
         clear();
+        ArtistInfoObjectsOn();
         var id = UpcomingEventsMenu.Active + 10;
         SetlistInfo check = ParseSetlistPage(Globals.MainPageInfo[id]);
         Globals.CurrentArtist = ParseArtistPage(check.artistLink, check.bandName);
@@ -568,6 +578,7 @@ public partial class MainWindow : Gtk.Window
     protected void OnRecentEditsMenuChanged(object sender, EventArgs e)
     {
         clear();
+        ArtistInfoObjectsOn();
         var id = RecentEditsMenu.Active + 20;
         SetlistInfo check = ParseSetlistPage(Globals.MainPageInfo[id]);
         Globals.CurrentArtist = ParseArtistPage(check.artistLink, check.bandName);
@@ -595,6 +606,7 @@ public partial class MainWindow : Gtk.Window
     protected void OnArtistByFirstLetterMenuChanged(object sender, EventArgs e)
     {
         var id = ArtistByFirstLetterMenu.Active;
+        ListOfArtistsOnChosenLetter.Visible = true;
         try
         {
             string[] AllArtistsOnLetter = GenerateAllLinks(Globals.artists[id]);
@@ -610,13 +622,13 @@ public partial class MainWindow : Gtk.Window
             }
             foreach (var name in Artists.Values)
             {
-                combobox9.AppendText(name);
+                ListOfArtistsOnChosenLetter.AppendText(name);
             }
             Globals.Artists = Artists;
         }
         catch (Exception)
         {
-            combobox9.AppendText("Load Artists first");
+            ListOfArtistsOnChosenLetter.AppendText("Load Artists first");
         }
 
     }
@@ -624,6 +636,8 @@ public partial class MainWindow : Gtk.Window
 
     protected void OnArtistToursMenuChanged(object sender, EventArgs e)
     {
+        SongsInTourMenu.Visible = true;
+        label10.Visible = true;
         for (int i = 0; i < 200; i++)
         {
             SongsInTourMenu.RemoveText(0);
@@ -647,11 +661,12 @@ public partial class MainWindow : Gtk.Window
     }
 
 
-    protected void OnCombobox9Changed(object sender, EventArgs e)
+    protected void OnListOfArtistsOnChosenLetterChanged(object sender, EventArgs e)
     {
         clear();
-        var id = combobox9.Active;
-        SetlistInfo check = ParseSetlistPage(Globals.Artists.Keys.ElementAt(id), combobox9.ActiveText);
+        ArtistInfoObjectsOn();
+        var id = ListOfArtistsOnChosenLetter.Active;
+        SetlistInfo check = ParseSetlistPage(Globals.Artists.Keys.ElementAt(id), ListOfArtistsOnChosenLetter.ActiveText);
         Globals.CurrentArtist = ParseArtistPage(check.artistLink, check.bandName);
         Globals.CurrentArtistToursLinks = Globals.CurrentArtist.tours.Keys.ToList();
         label1.Text = Globals.CurrentArtist.bandName;
@@ -677,6 +692,7 @@ public partial class MainWindow : Gtk.Window
     protected void OnTopSetlistsMenuChanged(object sender, EventArgs e)
     {
         clear();
+        ArtistInfoObjectsOn();
         var id = TopSetlistsMenu.Active;
         SetlistInfo check = ParseSetlistPage(Globals.TopSetlists[id].link, Globals.TopSetlists[id].bandName);
         Globals.CurrentArtist = ParseArtistPage(check.artistLink, check.bandName);
@@ -702,6 +718,7 @@ public partial class MainWindow : Gtk.Window
 
     protected void OnArtistTopSetlistsChanged(object sender, EventArgs e)
     {
+        ArtistInfoObjectsOn();
         var id = ArtistTopSetlists.Active;
         for (int i = 0; i < 100; i++)
         {
@@ -733,7 +750,27 @@ public partial class MainWindow : Gtk.Window
         }
     }
 
+    public void MainPageObjectsOn()
+    {
+        label2.Visible = true;
+        label3.Visible = true;
+        label4.Visible = true;
+        PopularSetlistsMenu.Visible = true;
+        UpcomingEventsMenu.Visible = true;
+        RecentEditsMenu.Visible = true;
+    }
+
+    public void ArtistInfoObjectsOn()
+    {
+        label5.Visible = true;
+        label6.Visible = true;
+        label7.Visible = true;
+        label8.Visible = true;
+        AllArtistSongsMenu.Visible = true;
+        ArtistAlbumsMenu.Visible = true;
+        ArtistToursMenu.Visible = true;
+        SongsInSetlistMenu.Visible = true;
+    }
 
 
-   
 }

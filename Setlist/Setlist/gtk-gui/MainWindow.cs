@@ -19,27 +19,63 @@ public partial class MainWindow
 
 	private global::Gtk.ComboBox RecentEditsMenu;
 
+	private global::Gtk.Label label15;
+
 	private global::Gtk.Button LoadMainPage;
 
+	private global::Gtk.VBox vbox6;
+
+	private global::Gtk.VBox vbox7;
+
+	private global::Gtk.Label label1;
+
+	private global::Gtk.VBox vbox8;
+
+	private global::Gtk.HBox hbox2;
+
+	private global::Gtk.Label label5;
+
+	private global::Gtk.Label label6;
+
+	private global::Gtk.Label label7;
+
+	private global::Gtk.HBox hbox3;
+
+	private global::Gtk.ComboBox AllArtistSongsMenu;
+
+	private global::Gtk.ComboBox ArtistAlbumsMenu;
+
+	private global::Gtk.ComboBox ArtistToursMenu;
+
+	private global::Gtk.VBox vbox9;
+
+	private global::Gtk.Label label8;
+
+	private global::Gtk.ComboBox SongsInSetlistMenu;
+
+	private global::Gtk.Label label10;
+
 	private global::Gtk.ComboBox SongsInTourMenu;
+
+	private global::Gtk.Label label13;
+
+	private global::Gtk.VBox vbox10;
+
+	private global::Gtk.Label label12;
+
+	private global::Gtk.ComboBox TopSetlistsMenu;
+
+	private global::Gtk.Button LoadTopSetlistsButton;
 
 	private global::Gtk.VBox vbox3;
 
 	private global::Gtk.VBox vbox4;
 
-	private global::Gtk.Label label1;
+	private global::Gtk.Label label11;
 
-	private global::Gtk.Label label5;
+	private global::Gtk.ComboBox ArtistTopSetlists;
 
-	private global::Gtk.ComboBox AllArtistSongsMenu;
-
-	private global::Gtk.Label label6;
-
-	private global::Gtk.ComboBox ArtistAlbumsMenu;
-
-	private global::Gtk.Label label7;
-
-	private global::Gtk.ComboBox ArtistToursMenu;
+	private global::Gtk.Label label16;
 
 	private global::Gtk.Label label9;
 
@@ -47,23 +83,15 @@ public partial class MainWindow
 
 	private global::Gtk.Button FindArtisButton;
 
-	private global::Gtk.ComboBox ArtistTopSetlists;
-
-	private global::Gtk.VBox vbox2;
-
-	private global::Gtk.Label label8;
-
-	private global::Gtk.ComboBox SongsInSetlistMenu;
-
-	private global::Gtk.ComboBox TopSetlistsMenu;
-
-	private global::Gtk.Button LoadTopSetlistsButton;
-
 	private global::Gtk.VBox vbox5;
+
+	private global::Gtk.Label label14;
 
 	private global::Gtk.ComboBox ArtistByFirstLetterMenu;
 
-	private global::Gtk.ComboBox combobox9;
+	private global::Gtk.ComboBox ListOfArtistsOnChosenLetter;
+
+	private global::Gtk.Label label17;
 
 	private global::Gtk.Button LoadArtistsButton;
 
@@ -97,6 +125,8 @@ public partial class MainWindow
 		this.vbox1.Add(this.PopularSetlistsMenu);
 		global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.PopularSetlistsMenu]));
 		w2.Position = 1;
+		w2.Expand = false;
+		w2.Fill = false;
 		// Container child vbox1.Gtk.Box+BoxChild
 		this.label3 = new global::Gtk.Label();
 		this.label3.Name = "label3";
@@ -112,6 +142,8 @@ public partial class MainWindow
 		this.vbox1.Add(this.UpcomingEventsMenu);
 		global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.UpcomingEventsMenu]));
 		w4.Position = 3;
+		w4.Expand = false;
+		w4.Fill = false;
 		// Container child vbox1.Gtk.Box+BoxChild
 		this.label4 = new global::Gtk.Label();
 		this.label4.Name = "label4";
@@ -127,6 +159,15 @@ public partial class MainWindow
 		this.vbox1.Add(this.RecentEditsMenu);
 		global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.RecentEditsMenu]));
 		w6.Position = 5;
+		w6.Expand = false;
+		w6.Fill = false;
+		// Container child vbox1.Gtk.Box+BoxChild
+		this.label15 = new global::Gtk.Label();
+		this.label15.Name = "label15";
+		this.label15.LabelProp = "";
+		this.vbox1.Add(this.label15);
+		global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.label15]));
+		w7.Position = 6;
 		// Container child vbox1.Gtk.Box+BoxChild
 		this.LoadMainPage = new global::Gtk.Button();
 		this.LoadMainPage.CanFocus = true;
@@ -134,20 +175,187 @@ public partial class MainWindow
 		this.LoadMainPage.UseUnderline = true;
 		this.LoadMainPage.Label = global::Mono.Unix.Catalog.GetString("MainPage");
 		this.vbox1.Add(this.LoadMainPage);
-		global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.LoadMainPage]));
-		w7.Position = 6;
-		w7.Fill = false;
+		global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.LoadMainPage]));
+		w8.Position = 7;
+		w8.Expand = false;
+		w8.Fill = false;
 		this.hbox1.Add(this.vbox1);
-		global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox1]));
-		w8.Position = 0;
-		// Container child hbox1.Gtk.Box+BoxChild
-		this.SongsInTourMenu = global::Gtk.ComboBox.NewText();
-		this.SongsInTourMenu.Name = "SongsInTourMenu";
-		this.hbox1.Add(this.SongsInTourMenu);
-		global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.SongsInTourMenu]));
-		w9.Position = 1;
+		global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox1]));
+		w9.Position = 0;
 		w9.Expand = false;
 		w9.Fill = false;
+		// Container child hbox1.Gtk.Box+BoxChild
+		this.vbox6 = new global::Gtk.VBox();
+		this.vbox6.Name = "vbox6";
+		this.vbox6.Spacing = 6;
+		// Container child vbox6.Gtk.Box+BoxChild
+		this.vbox7 = new global::Gtk.VBox();
+		this.vbox7.Name = "vbox7";
+		this.vbox7.Spacing = 6;
+		// Container child vbox7.Gtk.Box+BoxChild
+		this.label1 = new global::Gtk.Label();
+		this.label1.Name = "label1";
+		this.label1.LabelProp = global::Mono.Unix.Catalog.GetString("Artist");
+		this.vbox7.Add(this.label1);
+		global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox7[this.label1]));
+		w10.Position = 0;
+		// Container child vbox7.Gtk.Box+BoxChild
+		this.vbox8 = new global::Gtk.VBox();
+		this.vbox8.Name = "vbox8";
+		this.vbox8.Spacing = 6;
+		// Container child vbox8.Gtk.Box+BoxChild
+		this.hbox2 = new global::Gtk.HBox();
+		this.hbox2.Name = "hbox2";
+		this.hbox2.Spacing = 6;
+		// Container child hbox2.Gtk.Box+BoxChild
+		this.label5 = new global::Gtk.Label();
+		this.label5.Name = "label5";
+		this.label5.LabelProp = global::Mono.Unix.Catalog.GetString("All songs");
+		this.hbox2.Add(this.label5);
+		global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.label5]));
+		w11.Position = 0;
+		// Container child hbox2.Gtk.Box+BoxChild
+		this.label6 = new global::Gtk.Label();
+		this.label6.Name = "label6";
+		this.label6.LabelProp = global::Mono.Unix.Catalog.GetString("Albums");
+		this.hbox2.Add(this.label6);
+		global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.label6]));
+		w12.Position = 1;
+		// Container child hbox2.Gtk.Box+BoxChild
+		this.label7 = new global::Gtk.Label();
+		this.label7.LabelProp = global::Mono.Unix.Catalog.GetString("Tours");
+		this.hbox2.Add(this.label7);
+		global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.label7]));
+		w13.Position = 2;
+		this.vbox8.Add(this.hbox2);
+		global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.vbox8[this.hbox2]));
+		w14.Position = 0;
+		w14.Expand = false;
+		w14.Fill = false;
+		// Container child vbox8.Gtk.Box+BoxChild
+		this.hbox3 = new global::Gtk.HBox();
+		this.hbox3.Name = "hbox3";
+		this.hbox3.Spacing = 6;
+		// Container child hbox3.Gtk.Box+BoxChild
+		this.AllArtistSongsMenu = global::Gtk.ComboBox.NewText();
+		this.AllArtistSongsMenu.Name = "AllArtistSongsMenu";
+		this.hbox3.Add(this.AllArtistSongsMenu);
+		global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.AllArtistSongsMenu]));
+		w15.Position = 0;
+		// Container child hbox3.Gtk.Box+BoxChild
+		this.ArtistAlbumsMenu = global::Gtk.ComboBox.NewText();
+		this.ArtistAlbumsMenu.Name = "ArtistAlbumsMenu";
+		this.hbox3.Add(this.ArtistAlbumsMenu);
+		global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.ArtistAlbumsMenu]));
+		w16.Position = 1;
+		// Container child hbox3.Gtk.Box+BoxChild
+		this.ArtistToursMenu = global::Gtk.ComboBox.NewText();
+		this.ArtistToursMenu.Name = "ArtistToursMenu";
+		this.hbox3.Add(this.ArtistToursMenu);
+		global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.hbox3[this.ArtistToursMenu]));
+		w17.Position = 2;
+		this.vbox8.Add(this.hbox3);
+		global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.vbox8[this.hbox3]));
+		w18.Position = 1;
+		w18.Expand = false;
+		w18.Fill = false;
+		this.vbox7.Add(this.vbox8);
+		global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.vbox7[this.vbox8]));
+		w19.Position = 1;
+		w19.Expand = false;
+		w19.Fill = false;
+		this.vbox6.Add(this.vbox7);
+		global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.vbox6[this.vbox7]));
+		w20.Position = 0;
+		w20.Expand = false;
+		w20.Fill = false;
+		// Container child vbox6.Gtk.Box+BoxChild
+		this.vbox9 = new global::Gtk.VBox();
+		this.vbox9.Name = "vbox9";
+		this.vbox9.Spacing = 6;
+		// Container child vbox9.Gtk.Box+BoxChild
+		this.label8 = new global::Gtk.Label();
+		this.label8.Name = "label8";
+		this.label8.LabelProp = global::Mono.Unix.Catalog.GetString("Songs in setlist");
+		this.vbox9.Add(this.label8);
+		global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.vbox9[this.label8]));
+		w21.Position = 0;
+		w21.Expand = false;
+		w21.Fill = false;
+		// Container child vbox9.Gtk.Box+BoxChild
+		this.SongsInSetlistMenu = global::Gtk.ComboBox.NewText();
+		this.SongsInSetlistMenu.Name = "SongsInSetlistMenu";
+		this.vbox9.Add(this.SongsInSetlistMenu);
+		global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.vbox9[this.SongsInSetlistMenu]));
+		w22.Position = 1;
+		w22.Expand = false;
+		w22.Fill = false;
+		this.vbox6.Add(this.vbox9);
+		global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.vbox6[this.vbox9]));
+		w23.Position = 1;
+		w23.Expand = false;
+		w23.Fill = false;
+		// Container child vbox6.Gtk.Box+BoxChild
+		this.label10 = new global::Gtk.Label();
+		this.label10.Name = "label10";
+		this.label10.LabelProp = global::Mono.Unix.Catalog.GetString("Songs in tour");
+		this.vbox6.Add(this.label10);
+		global::Gtk.Box.BoxChild w24 = ((global::Gtk.Box.BoxChild)(this.vbox6[this.label10]));
+		w24.Position = 2;
+		w24.Expand = false;
+		w24.Fill = false;
+		// Container child vbox6.Gtk.Box+BoxChild
+		this.SongsInTourMenu = global::Gtk.ComboBox.NewText();
+		this.SongsInTourMenu.Name = "SongsInTourMenu";
+		this.vbox6.Add(this.SongsInTourMenu);
+		global::Gtk.Box.BoxChild w25 = ((global::Gtk.Box.BoxChild)(this.vbox6[this.SongsInTourMenu]));
+		w25.Position = 3;
+		w25.Expand = false;
+		w25.Fill = false;
+		// Container child vbox6.Gtk.Box+BoxChild
+		this.label13 = new global::Gtk.Label();
+		this.label13.Name = "label13";
+		this.label13.LabelProp = "";
+		this.vbox6.Add(this.label13);
+		global::Gtk.Box.BoxChild w26 = ((global::Gtk.Box.BoxChild)(this.vbox6[this.label13]));
+		w26.Position = 4;
+		// Container child vbox6.Gtk.Box+BoxChild
+		this.vbox10 = new global::Gtk.VBox();
+		this.vbox10.Name = "vbox10";
+		this.vbox10.Spacing = 6;
+		// Container child vbox10.Gtk.Box+BoxChild
+		this.label12 = new global::Gtk.Label();
+		this.label12.Name = "label12";
+		this.label12.LabelProp = global::Mono.Unix.Catalog.GetString("Top setlists page");
+		this.vbox10.Add(this.label12);
+		global::Gtk.Box.BoxChild w27 = ((global::Gtk.Box.BoxChild)(this.vbox10[this.label12]));
+		w27.Position = 0;
+		// Container child vbox10.Gtk.Box+BoxChild
+		this.TopSetlistsMenu = global::Gtk.ComboBox.NewText();
+		this.TopSetlistsMenu.Name = "TopSetlistsMenu";
+		this.vbox10.Add(this.TopSetlistsMenu);
+		global::Gtk.Box.BoxChild w28 = ((global::Gtk.Box.BoxChild)(this.vbox10[this.TopSetlistsMenu]));
+		w28.Position = 1;
+		this.vbox6.Add(this.vbox10);
+		global::Gtk.Box.BoxChild w29 = ((global::Gtk.Box.BoxChild)(this.vbox6[this.vbox10]));
+		w29.Position = 5;
+		w29.Expand = false;
+		w29.Fill = false;
+		// Container child vbox6.Gtk.Box+BoxChild
+		this.LoadTopSetlistsButton = new global::Gtk.Button();
+		this.LoadTopSetlistsButton.CanFocus = true;
+		this.LoadTopSetlistsButton.Name = "LoadTopSetlistsButton";
+		this.LoadTopSetlistsButton.UseUnderline = true;
+		this.LoadTopSetlistsButton.Label = global::Mono.Unix.Catalog.GetString("TopSetlists");
+		this.vbox6.Add(this.LoadTopSetlistsButton);
+		global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.vbox6[this.LoadTopSetlistsButton]));
+		w30.Position = 6;
+		w30.Expand = false;
+		w30.Fill = false;
+		this.hbox1.Add(this.vbox6);
+		global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox6]));
+		w31.Position = 1;
+		w31.Expand = false;
 		// Container child hbox1.Gtk.Box+BoxChild
 		this.vbox3 = new global::Gtk.VBox();
 		this.vbox3.Name = "vbox3";
@@ -157,72 +365,35 @@ public partial class MainWindow
 		this.vbox4.Name = "vbox4";
 		this.vbox4.Spacing = 6;
 		// Container child vbox4.Gtk.Box+BoxChild
-		this.label1 = new global::Gtk.Label();
-		this.label1.Name = "label1";
-		this.label1.LabelProp = global::Mono.Unix.Catalog.GetString("Artist");
-		this.vbox4.Add(this.label1);
-		global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.label1]));
-		w10.Position = 0;
-		w10.Expand = false;
-		w10.Fill = false;
+		this.label11 = new global::Gtk.Label();
+		this.label11.Name = "label11";
+		this.label11.LabelProp = global::Mono.Unix.Catalog.GetString("Setlists on found page");
+		this.vbox4.Add(this.label11);
+		global::Gtk.Box.BoxChild w32 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.label11]));
+		w32.Position = 0;
+		w32.Expand = false;
 		// Container child vbox4.Gtk.Box+BoxChild
-		this.label5 = new global::Gtk.Label();
-		this.label5.Name = "label5";
-		this.label5.LabelProp = global::Mono.Unix.Catalog.GetString("All songs");
-		this.vbox4.Add(this.label5);
-		global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.label5]));
-		w11.Position = 1;
-		w11.Expand = false;
-		w11.Fill = false;
+		this.ArtistTopSetlists = global::Gtk.ComboBox.NewText();
+		this.ArtistTopSetlists.Name = "ArtistTopSetlists";
+		this.vbox4.Add(this.ArtistTopSetlists);
+		global::Gtk.Box.BoxChild w33 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.ArtistTopSetlists]));
+		w33.Position = 1;
+		w33.Expand = false;
 		// Container child vbox4.Gtk.Box+BoxChild
-		this.AllArtistSongsMenu = global::Gtk.ComboBox.NewText();
-		this.AllArtistSongsMenu.Name = "AllArtistSongsMenu";
-		this.vbox4.Add(this.AllArtistSongsMenu);
-		global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.AllArtistSongsMenu]));
-		w12.Position = 2;
-		w12.Expand = false;
-		w12.Fill = false;
-		// Container child vbox4.Gtk.Box+BoxChild
-		this.label6 = new global::Gtk.Label();
-		this.label6.Name = "label6";
-		this.label6.LabelProp = global::Mono.Unix.Catalog.GetString("Albums");
-		this.vbox4.Add(this.label6);
-		global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.label6]));
-		w13.Position = 3;
-		w13.Expand = false;
-		w13.Fill = false;
-		// Container child vbox4.Gtk.Box+BoxChild
-		this.ArtistAlbumsMenu = global::Gtk.ComboBox.NewText();
-		this.ArtistAlbumsMenu.Name = "ArtistAlbumsMenu";
-		this.vbox4.Add(this.ArtistAlbumsMenu);
-		global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.ArtistAlbumsMenu]));
-		w14.Position = 4;
-		w14.Expand = false;
-		w14.Fill = false;
-		// Container child vbox4.Gtk.Box+BoxChild
-		this.label7 = new global::Gtk.Label();
-		this.label7.Name = "label7";
-		this.label7.LabelProp = global::Mono.Unix.Catalog.GetString("Tours");
-		this.vbox4.Add(this.label7);
-		global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.label7]));
-		w15.Position = 5;
-		w15.Expand = false;
-		w15.Fill = false;
-		// Container child vbox4.Gtk.Box+BoxChild
-		this.ArtistToursMenu = global::Gtk.ComboBox.NewText();
-		this.ArtistToursMenu.Name = "ArtistToursMenu";
-		this.vbox4.Add(this.ArtistToursMenu);
-		global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.ArtistToursMenu]));
-		w16.Position = 6;
-		w16.Expand = false;
-		w16.Fill = false;
+		this.label16 = new global::Gtk.Label();
+		this.label16.Name = "label16";
+		this.label16.LabelProp = "";
+		this.vbox4.Add(this.label16);
+		global::Gtk.Box.BoxChild w34 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.label16]));
+		w34.Position = 2;
 		// Container child vbox4.Gtk.Box+BoxChild
 		this.label9 = new global::Gtk.Label();
 		this.label9.Name = "label9";
 		this.label9.LabelProp = global::Mono.Unix.Catalog.GetString("Search field");
 		this.vbox4.Add(this.label9);
-		global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.label9]));
-		w17.Position = 7;
+		global::Gtk.Box.BoxChild w35 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.label9]));
+		w35.Position = 3;
+		w35.Expand = false;
 		// Container child vbox4.Gtk.Box+BoxChild
 		this.entry1 = new global::Gtk.Entry();
 		this.entry1.CanFocus = true;
@@ -230,10 +401,10 @@ public partial class MainWindow
 		this.entry1.IsEditable = true;
 		this.entry1.InvisibleChar = '•';
 		this.vbox4.Add(this.entry1);
-		global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.entry1]));
-		w18.Position = 8;
-		w18.Expand = false;
-		w18.Fill = false;
+		global::Gtk.Box.BoxChild w36 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.entry1]));
+		w36.Position = 4;
+		w36.Expand = false;
+		w36.Fill = false;
 		// Container child vbox4.Gtk.Box+BoxChild
 		this.FindArtisButton = new global::Gtk.Button();
 		this.FindArtisButton.CanFocus = true;
@@ -241,68 +412,28 @@ public partial class MainWindow
 		this.FindArtisButton.UseUnderline = true;
 		this.FindArtisButton.Label = global::Mono.Unix.Catalog.GetString("Find");
 		this.vbox4.Add(this.FindArtisButton);
-		global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.FindArtisButton]));
-		w19.Position = 9;
-		// Container child vbox4.Gtk.Box+BoxChild
-		this.ArtistTopSetlists = global::Gtk.ComboBox.NewText();
-		this.ArtistTopSetlists.Name = "ArtistTopSetlists";
-		this.vbox4.Add(this.ArtistTopSetlists);
-		global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.ArtistTopSetlists]));
-		w20.Position = 10;
-		w20.Expand = false;
-		w20.Fill = false;
+		global::Gtk.Box.BoxChild w37 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.FindArtisButton]));
+		w37.Position = 5;
+		w37.Expand = false;
 		this.vbox3.Add(this.vbox4);
-		global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.vbox4]));
-		w21.Position = 0;
-		w21.Expand = false;
-		w21.Fill = false;
+		global::Gtk.Box.BoxChild w38 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.vbox4]));
+		w38.Position = 0;
 		this.hbox1.Add(this.vbox3);
-		global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox3]));
-		w22.Position = 2;
-		w22.Fill = false;
-		// Container child hbox1.Gtk.Box+BoxChild
-		this.vbox2 = new global::Gtk.VBox();
-		this.vbox2.Name = "vbox2";
-		this.vbox2.Spacing = 6;
-		// Container child vbox2.Gtk.Box+BoxChild
-		this.label8 = new global::Gtk.Label();
-		this.label8.Name = "label8";
-		this.label8.LabelProp = global::Mono.Unix.Catalog.GetString("Songs on tour/setlist");
-		this.vbox2.Add(this.label8);
-		global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.label8]));
-		w23.Position = 0;
-		w23.Expand = false;
-		w23.Fill = false;
-		// Container child vbox2.Gtk.Box+BoxChild
-		this.SongsInSetlistMenu = global::Gtk.ComboBox.NewText();
-		this.SongsInSetlistMenu.Name = "SongsInSetlistMenu";
-		this.vbox2.Add(this.SongsInSetlistMenu);
-		global::Gtk.Box.BoxChild w24 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.SongsInSetlistMenu]));
-		w24.Position = 1;
-		// Container child vbox2.Gtk.Box+BoxChild
-		this.TopSetlistsMenu = global::Gtk.ComboBox.NewText();
-		this.TopSetlistsMenu.Name = "TopSetlistsMenu";
-		this.vbox2.Add(this.TopSetlistsMenu);
-		global::Gtk.Box.BoxChild w25 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.TopSetlistsMenu]));
-		w25.Position = 2;
-		// Container child vbox2.Gtk.Box+BoxChild
-		this.LoadTopSetlistsButton = new global::Gtk.Button();
-		this.LoadTopSetlistsButton.CanFocus = true;
-		this.LoadTopSetlistsButton.Name = "LoadTopSetlistsButton";
-		this.LoadTopSetlistsButton.UseUnderline = true;
-		this.LoadTopSetlistsButton.Label = global::Mono.Unix.Catalog.GetString("TopSetlists");
-		this.vbox2.Add(this.LoadTopSetlistsButton);
-		global::Gtk.Box.BoxChild w26 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.LoadTopSetlistsButton]));
-		w26.Position = 3;
-		w26.Expand = false;
-		w26.Fill = false;
-		this.hbox1.Add(this.vbox2);
-		global::Gtk.Box.BoxChild w27 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox2]));
-		w27.Position = 3;
+		global::Gtk.Box.BoxChild w39 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox3]));
+		w39.Position = 2;
 		// Container child hbox1.Gtk.Box+BoxChild
 		this.vbox5 = new global::Gtk.VBox();
 		this.vbox5.Name = "vbox5";
 		this.vbox5.Spacing = 6;
+		// Container child vbox5.Gtk.Box+BoxChild
+		this.label14 = new global::Gtk.Label();
+		this.label14.Name = "label14";
+		this.label14.LabelProp = global::Mono.Unix.Catalog.GetString("Search artist by letter");
+		this.vbox5.Add(this.label14);
+		global::Gtk.Box.BoxChild w40 = ((global::Gtk.Box.BoxChild)(this.vbox5[this.label14]));
+		w40.Position = 0;
+		w40.Expand = false;
+		w40.Fill = false;
 		// Container child vbox5.Gtk.Box+BoxChild
 		this.ArtistByFirstLetterMenu = global::Gtk.ComboBox.NewText();
 		this.ArtistByFirstLetterMenu.AppendText(global::Mono.Unix.Catalog.GetString("A"));
@@ -334,14 +465,25 @@ public partial class MainWindow
 		this.ArtistByFirstLetterMenu.AppendText(global::Mono.Unix.Catalog.GetString("0-9"));
 		this.ArtistByFirstLetterMenu.Name = "ArtistByFirstLetterMenu";
 		this.vbox5.Add(this.ArtistByFirstLetterMenu);
-		global::Gtk.Box.BoxChild w28 = ((global::Gtk.Box.BoxChild)(this.vbox5[this.ArtistByFirstLetterMenu]));
-		w28.Position = 0;
+		global::Gtk.Box.BoxChild w41 = ((global::Gtk.Box.BoxChild)(this.vbox5[this.ArtistByFirstLetterMenu]));
+		w41.Position = 1;
+		w41.Expand = false;
+		w41.Fill = false;
 		// Container child vbox5.Gtk.Box+BoxChild
-		this.combobox9 = global::Gtk.ComboBox.NewText();
-		this.combobox9.Name = "combobox9";
-		this.vbox5.Add(this.combobox9);
-		global::Gtk.Box.BoxChild w29 = ((global::Gtk.Box.BoxChild)(this.vbox5[this.combobox9]));
-		w29.Position = 1;
+		this.ListOfArtistsOnChosenLetter = global::Gtk.ComboBox.NewText();
+		this.ListOfArtistsOnChosenLetter.Name = "ListOfArtistsOnChosenLetter";
+		this.vbox5.Add(this.ListOfArtistsOnChosenLetter);
+		global::Gtk.Box.BoxChild w42 = ((global::Gtk.Box.BoxChild)(this.vbox5[this.ListOfArtistsOnChosenLetter]));
+		w42.Position = 2;
+		w42.Expand = false;
+		w42.Fill = false;
+		// Container child vbox5.Gtk.Box+BoxChild
+		this.label17 = new global::Gtk.Label();
+		this.label17.Name = "label17";
+		this.label17.LabelProp = "";
+		this.vbox5.Add(this.label17);
+		global::Gtk.Box.BoxChild w43 = ((global::Gtk.Box.BoxChild)(this.vbox5[this.label17]));
+		w43.Position = 3;
 		// Container child vbox5.Gtk.Box+BoxChild
 		this.LoadArtistsButton = new global::Gtk.Button();
 		this.LoadArtistsButton.CanFocus = true;
@@ -349,20 +491,46 @@ public partial class MainWindow
 		this.LoadArtistsButton.UseUnderline = true;
 		this.LoadArtistsButton.Label = global::Mono.Unix.Catalog.GetString("Load Artists");
 		this.vbox5.Add(this.LoadArtistsButton);
-		global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.vbox5[this.LoadArtistsButton]));
-		w30.Position = 2;
-		w30.Expand = false;
-		w30.Fill = false;
+		global::Gtk.Box.BoxChild w44 = ((global::Gtk.Box.BoxChild)(this.vbox5[this.LoadArtistsButton]));
+		w44.Position = 4;
+		w44.Expand = false;
+		w44.Fill = false;
 		this.hbox1.Add(this.vbox5);
-		global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox5]));
-		w31.Position = 4;
+		global::Gtk.Box.BoxChild w45 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox5]));
+		w45.Position = 3;
+		w45.Expand = false;
+		w45.Fill = false;
 		this.Add(this.hbox1);
 		if ((this.Child != null))
 		{
 			this.Child.ShowAll();
 		}
-		this.DefaultWidth = 924;
-		this.DefaultHeight = 464;
+		this.DefaultWidth = 615;
+		this.DefaultHeight = 405;
+		this.label2.Hide();
+		this.PopularSetlistsMenu.Hide();
+		this.label3.Hide();
+		this.UpcomingEventsMenu.Hide();
+		this.label4.Hide();
+		this.RecentEditsMenu.Hide();
+		this.label1.Hide();
+		this.label5.Hide();
+		this.label6.Hide();
+		this.label7.Hide();
+		this.AllArtistSongsMenu.Hide();
+		this.ArtistAlbumsMenu.Hide();
+		this.ArtistToursMenu.Hide();
+		this.label8.Hide();
+		this.SongsInSetlistMenu.Hide();
+		this.label10.Hide();
+		this.SongsInTourMenu.Hide();
+		this.label12.Hide();
+		this.TopSetlistsMenu.Hide();
+		this.label11.Hide();
+		this.ArtistTopSetlists.Hide();
+		this.label14.Hide();
+		this.ArtistByFirstLetterMenu.Hide();
+		this.ListOfArtistsOnChosenLetter.Hide();
 		this.Show();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
 		this.PopularSetlistsMenu.Changed += new global::System.EventHandler(this.OnPopularSetlistsMenuChanged);
@@ -370,12 +538,12 @@ public partial class MainWindow
 		this.RecentEditsMenu.Changed += new global::System.EventHandler(this.OnRecentEditsMenuChanged);
 		this.LoadMainPage.Clicked += new global::System.EventHandler(this.OnLoadMainPageClicked);
 		this.ArtistToursMenu.Changed += new global::System.EventHandler(this.OnArtistToursMenuChanged);
-		this.FindArtisButton.Clicked += new global::System.EventHandler(this.OnFindArtisButtonClicked);
-		this.ArtistTopSetlists.Changed += new global::System.EventHandler(this.OnArtistTopSetlistsChanged);
 		this.TopSetlistsMenu.Changed += new global::System.EventHandler(this.OnTopSetlistsMenuChanged);
 		this.LoadTopSetlistsButton.Clicked += new global::System.EventHandler(this.OnLoadTopSetlistsButtonClicked);
+		this.ArtistTopSetlists.Changed += new global::System.EventHandler(this.OnArtistTopSetlistsChanged);
+		this.FindArtisButton.Clicked += new global::System.EventHandler(this.OnFindArtisButtonClicked);
 		this.ArtistByFirstLetterMenu.Changed += new global::System.EventHandler(this.OnArtistByFirstLetterMenuChanged);
-		this.combobox9.Changed += new global::System.EventHandler(this.OnCombobox9Changed);
+		this.ListOfArtistsOnChosenLetter.Changed += new global::System.EventHandler(this.OnListOfArtistsOnChosenLetterChanged);
 		this.LoadArtistsButton.Clicked += new global::System.EventHandler(this.OnLoadArtistsButtonClicked);
 	}
 }
